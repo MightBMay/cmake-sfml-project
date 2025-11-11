@@ -5,6 +5,7 @@
 #include <memory>
 #include <algorithm>
 #include <functional>
+#include <fstream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -14,11 +15,15 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "ComponentFactory.h"
+#include "RendererFactory.h"
 
 #include "Renderer.h"
 #include "CircleRenderer.h"
+#include "json.hpp"
 
 #include "Button.h"
 #include "Event.h"
 #include "Global.h"
+#include "Input.h"
 

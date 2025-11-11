@@ -10,8 +10,13 @@ protected:
 
 public:
 	virtual ~Renderer() = default;
+	Renderer(){}
 	Renderer(GameObject* obj) { _transform = obj->_transform.get(); }
 	Renderer(Transform* transform) { _transform = transform; }
+
+	void SetTransform(Transform* transform) {
+		_transform = transform;
+	}
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 

@@ -1,6 +1,7 @@
 #pragma once
-#include "Global.h"
+
 #include "Event.h"
+
 class Button : public Component {
 
 protected:
@@ -9,7 +10,7 @@ protected:
 	/// was the cursor hovering this component's renderer last update.
 	/// </summary>
 	bool wasHovering = false;
-
+	bool isClicked = false;
 	Event<> _onClick;
 	Event<> _onRelease;
 	Event<> _onHover;
@@ -22,49 +23,15 @@ protected:
 	void ohe() { std::cout << "onhoverexit"; }
 
 public:
-	Event<>& GetOnClick() { return _onClick; }
-	Event<>& GetOnRelease() { return _onRelease; }
-	Event<>& GetOnHover() { return _onHover; }
-	Event<>& GetOnHoverExit() { return _onHoverExit; }
+	Event<>& GetOnClick();
+	Event<>& GetOnRelease();
+	Event<>& GetOnHover();
+	Event<>& GetOnHoverExit();
 
 
-	virtual void Start() { 
-		_renderer = _parent->getRenderer();
+	virtual void Start();
 
-
-		_onClick += [this]() {oc(); };
-		_onRelease += [this]() {oR(); };
-		_onHover += [this]() {oh(); };
-		_onHoverExit += [this]() {ohe(); };
-
-	}
-
-
-
-	virtual void Update(float deltaTime) {
-	
-
-		auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-		bool isHovering = _renderer->IsPointInside(mousePos);
-
-
-		if (isHovering && !wasHovering) {
-			_onHover();
-			
-		}
-
-		if (!isHovering && wasHovering) {
-			_onHoverExit();
-		}
-
-
-		wasHovering = isHovering;
-
-
-
-		
-	
-	}
+	virtual void Update(float deltaTime);
 
 
 };

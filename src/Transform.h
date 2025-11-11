@@ -13,6 +13,13 @@ private:
 public:
 	Transform() = default;
 
+    void SetTransform(sf::Vector2f position, sf::Vector2f scale, float rotation) {
+        _transformable.setPosition(position);
+        _transformable.setScale(scale);
+        _transformable.setRotation(sf::degrees(rotation));
+    }
+
+
 	void SetPosition(const sf::Vector2f& position) {_transformable.setPosition(position);}
 
     void SetRotation(float degrees) { _transformable.setRotation(sf::degrees(degrees)); }

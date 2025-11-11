@@ -2,6 +2,10 @@
 #include "GameObject.h"
 
 
+GameObject::GameObject() {
+	_transform = std::make_unique<Transform>();
+}
+
 
 GameObject::GameObject(const sf::Vector2f& position)
 {

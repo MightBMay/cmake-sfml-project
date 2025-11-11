@@ -5,40 +5,81 @@
 #include "pch.h"
 #include "PlayerMovement.h"
 #include "Event.h"
+#include "SceneLoader.h"
+#include "Scene.h"
 
-static sf::RenderWindow window;
+sf::RenderWindow window;
+sf::View playerView;
+
+
+
+using json = nlohmann::json;
+
 
 
 int main()
 {
-    window = sf::RenderWindow(
-        sf::VideoMode({ 1920u, 1080u }), 
-        "CMake SFML Project");
+    Input::Initialize();
+    Input::ResetToDefaultBinds();
+    playerView = sf::View({ 0,0 }, { 1920,1080 });
+
+    window = sf::RenderWindow(sf::VideoMode({ 1920u, 1080u }), "CMake SFML Project");
+    window.setView(playerView);
     window.setFramerateLimit(144);
+ 
 
+    std::ifstream file("../assets/prefabs/testScene.json");
+    if (!file.is_open()) {
+        std::cerr << "failed to open scene \n";
+        return 1;
+    }
 
-    GameObject* test = new GameObject({ 960, 540 });
-    test->setRenderer<CircleRenderer>(test->_transform.get(), 64);
-    test->addComponent<Button>();
+    json data;
+    try {
+        file >> data;
+    }
+    catch (const json::parse_error& e) {
+        std::cerr << "JSON parse error: " << e.what() << "\n";
+        return 1;
+    }
+
+    std::unique_ptr<Scene> curScene = LoadScene(data);
+
+    /*
+    new GameObject({ 0, 0});
+    test->setRenderer<CircleRenderer>(test->_transform.get(), 64, 5);
+    test->addComponent<PlayerMovement>();
+    test->addComponent<Button>();*/
 
     sf::Clock dtClock;
 
     while (window.isOpen())
     {
+        Input::Update();
+
         sf::Time dt = dtClock.restart();
         float deltaTime = dt.asSeconds();
+
         window.clear();
+
         while (const std::optional event = window.pollEvent())
         {
+            Input::HandleEvent(event);
             if (event->is<sf::Event::Closed>())
             {
                 window.close();
             }
+            
         }
 
 
-        test->Update(deltaTime);
-        window.draw(*test, sf::RenderStates::Default);
+        curScene->Update(deltaTime);
+        curScene->Draw();
+
         window.display();
+
     }
+
+    Input::SaveInputToFile();
+
 }

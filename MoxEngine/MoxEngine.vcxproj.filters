@@ -22,6 +22,15 @@
     <Filter Include="Header Files\Other">
       <UniqueIdentifier>{f9d395ad-40e0-4ae0-8725-a74639cf87a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{bb095106-fd1c-4466-84cf-24b57d31def3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Other">
+      <UniqueIdentifier>{a2517094-e00e-4616-ab49-95cad3a38e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SceneLoading">
+      <UniqueIdentifier>{6419cbfd-086d-4b0b-b268-cd0eaf3557bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Component.h">
@@ -48,11 +57,26 @@
     <ClInclude Include="..\src\Global.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Event.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Button.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ComponentFactory.h">
+      <Filter>Header Files\SceneLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SceneLoader.h">
+      <Filter>Header Files\SceneLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RendererFactory.h">
+      <Filter>Header Files\SceneLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Scene.h">
+      <Filter>Header Files\SceneLoading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,5 +86,16 @@
     <ClCompile Include="..\src\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Button.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Player.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
