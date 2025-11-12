@@ -1,5 +1,7 @@
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\MoxEditor.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\MoxEditor.obj
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\CreateGameObject.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\CreateGameObject.obj
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Action.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\GUI_Action.obj
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\GUI_Inspector.obj
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\imgui-SFML.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\imgui-SFML.obj
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\imgui.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\imgui.obj
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\imgui_demo.cpp;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\x64\Release\imgui_demo.obj

@@ -16,6 +16,7 @@ public:
 
 
 	virtual void getImGuiParams(nlohmann::json& data) = 0;
+	virtual void getInspectorParams() = 0;
 
 	void SetTransform(Transform* transform) {
 		_transform = transform;

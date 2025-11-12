@@ -4,8 +4,8 @@
 class RectRenderer : public Renderer {
 private:
 	std::unique_ptr<sf::RectangleShape> _rectShape;
-	float _width = 32;
-	float _height = 32;
+	inline static float _defaultWidth = 32;
+	inline static float _defaultHeight = 32;
 
 
 public:
@@ -23,15 +23,32 @@ public:
 	}
 
 	virtual void getImGuiParams(nlohmann::json& data) override {
-		if (!data.contains("width"))       data["width"] = _width;
-		if (!data.contains("height"))  data["height"] = _height;
+		if (!data.contains("width"))       data["width"] = _defaultWidth;
+		if (!data.contains("height"))  data["height"] = _defaultHeight;
 
-		float width = data.value("width", _width);
-		float height = data.value("height", _height);
+		float width = data.value("width", _defaultWidth);
+		float height = data.value("height", _defaultHeight);
 
 		if (ImGui::InputFloat("width", &width)) data["width"] = width;
 		if (ImGui::InputFloat("height", &height)) data["height"] = height;
 	}
+
+	virtual void getInspectorParams() override {
+		ImGui::SeparatorText("Rect Renderer");
+		sf::Vector2f size = _rectShape->getSize();
+		float width = size.x, height = size.y;
+		if (ImGui::InputFloat("Width", &width)) {
+			if (width< 0.0f) width= 0.0f;
+			_rectShape->setSize({ width,height });
+		}
+
+		if (ImGui::InputFloat("Height", &height)) {
+			if (height < 0) height = 0;
+			_rectShape->setSize({ width,height });
+		}
+	}
+
+
 
 	virtual sf::FloatRect GetGlobalBounds() const override {
 		return _transform->GetSFTransform().transformRect(_rectShape->getGlobalBounds());

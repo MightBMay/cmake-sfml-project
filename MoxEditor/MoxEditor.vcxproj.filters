@@ -12,23 +12,26 @@
     <Filter Include="Header Files\Imgui stuff">
       <UniqueIdentifier>{8c3b8c27-7dde-4c04-bb0b-e94727ce5289}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game Code">
+    <Filter Include="Game Code">
       <UniqueIdentifier>{6a01544c-79e2-43bb-a7c6-19f3b0908b69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Source Files">
+    <Filter Include="Game Code\Header">
+      <UniqueIdentifier>{c99641f2-d3ce-49e5-9a55-c1e715437b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Code\Source">
+      <UniqueIdentifier>{4e6b50cb-d137-4aeb-b759-1b5cd2aa73c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files\Game Code\Header">
-      <UniqueIdentifier>{c99641f2-d3ce-49e5-9a55-c1e715437b53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game Code\Source">
-      <UniqueIdentifier>{4e6b50cb-d137-4aeb-b759-1b5cd2aa73c7}</UniqueIdentifier>
+    <Filter Include="Header Files\GUI Actions">
+      <UniqueIdentifier>{0a27f171-a9ff-47cb-8c75-7106f6f1d6da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MoxEditor.cpp">
-      <Filter>Header Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\imgui.cpp">
       <Filter>Header Files\Imgui stuff</Filter>
@@ -49,7 +52,13 @@
       <Filter>Header Files\Imgui stuff</Filter>
     </ClCompile>
     <ClCompile Include="src\CreateGameObject.cpp">
-      <Filter>Header Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI_Action.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI_Inspector.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +90,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerMovement.h">
-      <Filter>Header Files\Game Code\Header</Filter>
+      <Filter>Game Code\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneHeirarchy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_Manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_Action.h">
+      <Filter>Header Files\GUI Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_Inspector.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

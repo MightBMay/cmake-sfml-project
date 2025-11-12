@@ -18,14 +18,25 @@
 #include "Button.h"
 
 #include "CreateGameObject.h"
-
+#include "SceneHeirarchy.h"
+#include "GUI_Manager.h"
+#include "GUI_Inspector.h"
 
 using json = nlohmann::json;
 
 sf::RenderWindow window;
 sf::View playerView;
 
-GUI_CreateGameObject cgoMenu;
+
+
+void DrawGUI(Scene& scene) {
+    GUI_CreateGameObject::instance().Draw(scene);
+    GUI_SceneHierarchy::instance().Draw(scene);
+    GUI_Manager::instance().Draw();
+    GUI_Inspector::instance().Draw();
+
+}
+
 
 
 int main()
@@ -79,7 +90,7 @@ int main()
 
         }
 
-        cgoMenu.draw(*scene);
+        DrawGUI(*scene);
 
         scene->Update(deltaTime);
         scene->Draw();

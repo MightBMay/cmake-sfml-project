@@ -19,7 +19,8 @@ GameObject::GameObject(const sf::Vector2f& position)
 void GameObject::Update(float deltaTime) {
 
 	for (auto& c : _components) {
-		c->Update(deltaTime);
+		if(c->GetEnabled())
+			c->Update(deltaTime);
 	}
 }
 

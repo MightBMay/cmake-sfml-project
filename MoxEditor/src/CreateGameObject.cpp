@@ -1,11 +1,14 @@
 #include "CreateGameObject.h"
 #include "imgui.h"
 #include "imgui-SFML.h"
+#include "GUI_Action.h"
+#include "GUI_Manager.h"
 
 
-
-void GUI_CreateGameObject::draw(Scene& scene) {
-    ImGui::Begin("Create GameObject");
+void GUI_CreateGameObject::Draw(Scene& scene) {
+    if (!_isVisible) return;
+    ImGui::Begin("Create GameObject", &_isVisible,
+        ImGuiWindowFlags_AlwaysAutoResize);
     
    
     ImGui::InputText("Name", name, 64);
@@ -50,41 +53,62 @@ void GUI_CreateGameObject::draw(Scene& scene) {
 #pragma region  Component
     ImGui::SeparatorText("Components");
 
-    // Get all registered component types
-    const std::vector<std::string> componentTypes = ComponentFactory::instance().GetTypes();
-    std::vector<const char*> componentOptions;
-    componentOptions.reserve(componentTypes.size());
-    for (auto& s : componentTypes) componentOptions.push_back(s.c_str());
+    // Show Add Component button
+    if (ImGui::Button("Add Component")) {
+        addingComponent = true;
+        componentData = nlohmann::json::object(); // reset previous data
+    }
 
-    if (!componentOptions.empty()) {
-        if (ImGui::Combo("Component Type", &selectedComponentIndex, componentOptions.data(), (int)componentOptions.size())) {
-            componentData = nlohmann::json::object();
-            previousComponentIndex = selectedComponentIndex;
+    // If we're in the process of adding a component
+    if (addingComponent) {
+        ImGui::Indent(20); // visually offset the add-component UI
+
+        // Component type dropdown
+        const std::vector<std::string> componentTypes = ComponentFactory::instance().GetTypes();
+        std::vector<const char*> componentOptions;
+        componentOptions.reserve(componentTypes.size());
+        for (auto& s : componentTypes) componentOptions.push_back(s.c_str());
+
+        if (!componentOptions.empty()) {
+            ImGui::Combo("Component Type", &selectedComponentIndex, componentOptions.data(), (int)componentOptions.size());
+
+            std::string selectedComponent = componentOptions[selectedComponentIndex];
+
+            // Show parameters for the selected component
+            try {
+                auto tempComponent = ComponentFactory::instance().Create(selectedComponent, componentData);
+                tempComponent->getImGuiParams(componentData);
+            }
+            catch (const std::exception& e) {
+                ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error with component UI: %s", e.what());
+            }
         }
 
-        std::string selectedComponent = componentOptions[selectedComponentIndex];
-
-        // Show ImGui fields for this component
-        try {
-            auto tempComponent = ComponentFactory::instance().Create(selectedComponent, componentData);
-            tempComponent->getImGuiParams(componentData);
-        }
-        catch (const std::exception& e) {
-            ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error with component UI: %s", e.what());
-        }
-
-        // --- Add Component button ---
-        if (ImGui::Button("Add Component")) {
-            // Store current component selection and its data
+        // Confirm and Cancel buttons
+        if (ImGui::Button("Confirm")) {
+            // Add to queue
+            std::string selectedComponent = componentOptions[selectedComponentIndex];
             componentsToAdd.push_back({ selectedComponent, componentData });
-            componentData = nlohmann::json::object(); // clear data for next component
+            addingComponent = false; // close add-component UI
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel")) {
+            addingComponent = false; // discard changes
         }
 
-        // --- List all queued components ---
-        if (!componentsToAdd.empty()) {
-            ImGui::SeparatorText("Queued Components");
-            for (int i = 0; i < componentsToAdd.size(); ++i) {
-                ImGui::Text("%d. %s", i + 1, componentsToAdd[i].type.c_str());
+        ImGui::Unindent(20);
+    }
+
+    // Show queued components
+    if (!componentsToAdd.empty()) {
+        ImGui::SeparatorText("Queued Components");
+        for (int i = 0; i < componentsToAdd.size(); ++i) {
+            ImGui::Text("%d. %s", i + 1, componentsToAdd[i].type.c_str());
+            ImGui::SameLine();
+            std::string buttonLabel = "Remove##" + std::to_string(i);
+            if (ImGui::Button(buttonLabel.c_str())) {
+                componentsToAdd.erase(componentsToAdd.begin() + i);
+                i--;
             }
         }
     }
@@ -100,28 +124,30 @@ void GUI_CreateGameObject::draw(Scene& scene) {
 
     // Create button
     if (ImGui::Button("Create")) {
-        auto obj = std::make_unique<GameObject>();
-        obj->SetName(std::string(name));
-        obj->_transform->SetTransform({ pos[0], pos[1] }, { scale[0], scale[1] }, rot);
+
+
 
         auto rendererType = rendererOptions[selectedRendererIndex];
-        auto renderer = RendererFactory::instance().Create(rendererType, rendererData);
-        renderer->SetTransform(obj->_transform.get());
-        obj->setRenderer(std::move(renderer));
 
-        GameObject* objPtr = obj.get();
+        // Construct the action (this captures all needed state)
+        auto action = std::make_unique<GUIA_CreateGameObject>(
+            &scene,
+            std::string(name),
+            pos,
+            scale,
+            rot,
+            rendererType,
+            rendererData,
+            componentsToAdd
+        );
+        
+        GUI_Manager::instance().ExecuteAction(std::move(action));
 
-        for (auto& component : componentsToAdd) {
-            std::cout << "component type: " << component.type << ", component data: " << component.data << "\n";
-            auto c = ComponentFactory::instance().Create(component.type, component.data);
-            c->SetParent(objPtr);
-            obj->addComponent(std::move(c));
-            
-        }
-
-
-        scene.addObject(std::move(obj));
         componentsToAdd.clear();
+
+        Close();
+
+
     }
 
     ImGui::End();

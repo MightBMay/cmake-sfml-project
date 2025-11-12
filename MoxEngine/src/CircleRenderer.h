@@ -6,8 +6,8 @@ class CircleRenderer : public Renderer {
 private:
 
 	std::unique_ptr<sf::CircleShape> _circleShape;
-	float _radius = 32;
-	int _vertexCount = 32;
+	inline static float _radius = 32;
+	inline static int _vertexCount = 32;
 
 
 
@@ -30,6 +30,7 @@ public:
 		
 	}
 
+
 	virtual void getImGuiParams(nlohmann::json& data) override {
 		if (!data.contains("radius"))       data["radius"] = _radius;
 		if (!data.contains("vertexCount"))  data["vertexCount"] = _vertexCount;
@@ -39,6 +40,21 @@ public:
 
 		if (ImGui::InputFloat("Radius", &radius)) data["radius"] = radius;
 		if (ImGui::InputInt("Vertex Count", &vertexCount)) data["vertexCount"] = vertexCount;
+	}
+
+	virtual void getInspectorParams() override {
+		ImGui::SeparatorText("Circle Renderer");
+		float radius = _circleShape->getRadius();
+		if (ImGui::InputFloat("Radius", &radius)) {
+			if (radius < 0.0f) radius = 0.0f;
+			_circleShape->setRadius(radius);
+		}
+		
+		int vertexCount = _circleShape->getPointCount();
+		if (ImGui::InputInt("Vertex Count", &vertexCount)) {
+			if (vertexCount < 3) vertexCount = 3; 
+			_circleShape->setPointCount(vertexCount);
+		}
 	}
 
 

@@ -1,0 +1,106 @@
+#pragma once
+#include "CreateGameObject.h"
+
+struct GUI_Action
+{
+public:
+    virtual ~GUI_Action() = default;
+	virtual void Execute()  = 0;
+
+	virtual void Undo()  = 0;
+};
+
+
+struct  GUIA_CreateGameObject : public GUI_Action
+{
+private:
+    Scene* _scene = nullptr;
+    std::string _name;
+    float _pos[2];
+    float _scale[2];
+    float _rot;
+    std::string _rendererType;
+    nlohmann::json _rendererData;
+    std::vector<QueuedComponent> _components;
+
+    GameObject* _createdObject = nullptr; // non-owning, to Undo()
+
+public:
+
+
+    GUIA_CreateGameObject(
+        Scene* scene,
+        const std::string& name,
+        const float pos[2],
+        const float scale[2],
+        float rot,
+        const std::string& rendererType,
+        const nlohmann::json& rendererData,
+        const std::vector<QueuedComponent>& components
+    )
+        : _scene(scene),
+        _name(name),
+        _rot(rot),
+        _rendererType(rendererType),
+        _rendererData(rendererData),
+        _components(components)
+    {
+        _pos[0] = pos[0];
+        _pos[1] = pos[1];
+        _scale[0] = scale[0];
+        _scale[1] = scale[1];
+    }
+
+	virtual void Execute()  override;
+
+	virtual void Undo()  override;
+};
+
+
+struct GUIA_AddComponent :public GUI_Action {
+private:
+    GameObject* _obj;
+    const std::string _componentType;
+    const nlohmann::json& _componentData;
+    Component* _componentPtrRaw = nullptr;
+
+public:
+    GUIA_AddComponent(GameObject* obj, const std::string& componentType, const nlohmann::json& componentData) :
+        _obj(obj), _componentType(componentType), _componentData(componentData) {}
+
+    virtual void Execute() override {
+        auto newComp = ComponentFactory::instance().Create(_componentType, _componentData);
+        newComp->SetParent(_obj);
+        _componentPtrRaw = newComp.get();
+        _obj->addComponent(std::move(newComp));
+        
+    }
+
+    virtual void Undo() override {
+        if (_obj && _componentPtrRaw) {
+            _obj->removeComponent(_componentPtrRaw);
+        }
+    }
+
+};
+
+struct GUIA_RemoveComponent : public GUI_Action {
+private:
+    GameObject* _obj;
+    Component* _componentPtr; 
+    std::unique_ptr<Component> _removedComponent;
+    size_t* _guiComponentIndex;
+
+public:
+    GUIA_RemoveComponent(GameObject* obj, Component* component, size_t* guiComponentIndex)
+        : _obj(obj), _componentPtr(component), _guiComponentIndex(guiComponentIndex) {}
+
+    virtual void Execute() override {
+        _removedComponent = _obj->removeComponent(_componentPtr);
+        *_guiComponentIndex -=1;
+    }
+
+    virtual void Undo() override {
+        if(_obj && _removedComponent) _obj->addComponent(std::move(_removedComponent));
+    }
+};

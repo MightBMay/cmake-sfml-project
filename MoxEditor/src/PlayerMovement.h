@@ -47,12 +47,20 @@ public:
 	}
 
 	PlayerMovement(float speed = 50):_moveSpeed(speed){}
+	virtual std::string GetName() const override { static std::string name = "PlayerMovement"; return  name; };
 
 	virtual void getImGuiParams(nlohmann::json& data) override{
 		if (!data.contains("speed")) data["speed"] = _moveSpeed;
 		float speed = data.value("speed", _moveSpeed);
 		if (ImGui::InputFloat("speed", &speed)) data["speed"] = speed;
 	}
+
+	virtual void getInspectorParams() override {
+		if (ImGui::InputFloat("Move Speed", &_moveSpeed)) {
+		
+		}
+	}
+
 
 private:
 	inline static bool registered = [] {// static bool with a lambda assignment. ensures this is calculated exactly once, at startup, to register for the SceneLoader's use later.

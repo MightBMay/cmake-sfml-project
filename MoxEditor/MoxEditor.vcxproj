@@ -137,6 +137,8 @@
   <ItemGroup>
     <ClCompile Include="MoxEditor.cpp" />
     <ClCompile Include="src\CreateGameObject.cpp" />
+    <ClCompile Include="src\GUI_Action.cpp" />
+    <ClCompile Include="src\GUI_Inspector.cpp" />
     <ClCompile Include="src\imgui-SFML.cpp" />
     <ClCompile Include="src\imgui.cpp" />
     <ClCompile Include="src\imgui_demo.cpp" />
@@ -151,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CreateGameObject.h" />
+    <ClInclude Include="src\GUI_Action.h" />
+    <ClInclude Include="src\GUI_Inspector.h" />
+    <ClInclude Include="src\GUI_Manager.h" />
     <ClInclude Include="src\imconfig.h" />
     <ClInclude Include="src\imgui-SFML.h" />
     <ClInclude Include="src\imgui-SFML_export.h" />
@@ -160,6 +165,7 @@
     <ClInclude Include="src\imstb_textedit.h" />
     <ClInclude Include="src\imstb_truetype.h" />
     <ClInclude Include="src\PlayerMovement.h" />
+    <ClInclude Include="src\SceneHeirarchy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

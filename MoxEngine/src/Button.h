@@ -41,6 +41,7 @@ public:
 
 
 	Button(std::string onclicktext) :_onclicktext(onclicktext) {}
+	virtual std::string GetName() const override { static std::string name = "Button"; return  name; };
 
 
 	virtual void getImGuiParams(nlohmann::json& data) override {
@@ -52,6 +53,20 @@ public:
 
 		if (ImGui::InputText("On Click Text", buffer.data(), buffer.size())) {
 			data["onclicktext"] = std::string(buffer.data());
+		}
+	}
+
+
+	virtual void getInspectorParams() override {
+	// Create a local buffer for ImGui input
+		std::array<char, 512> buffer{};
+		// Copy current value of _onclicktext into buffer
+		std::copy_n(_onclicktext.begin(), std::min(_onclicktext.size(), buffer.size() - 1), buffer.begin());
+
+		// InputText modifies buffer in-place
+		if (ImGui::InputText("On Click Text", buffer.data(), buffer.size())) {
+			// Write back changes into member variable
+			_onclicktext = std::string(buffer.data());
 		}
 	}
 

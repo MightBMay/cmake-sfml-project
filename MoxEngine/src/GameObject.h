@@ -49,6 +49,22 @@ public:
 
 	void addComponent(std::unique_ptr<Component> component);
 
+
+	std::unique_ptr<Component> removeComponent(Component* toRemove) {
+		auto it = std::find_if(_components.begin(), _components.end(),
+			[toRemove](const std::unique_ptr<Component>& ptr) { return ptr.get() == toRemove; });
+
+		if (it != _components.end()) {
+			// Move the unique_ptr out
+			std::unique_ptr<Component> removed = std::move(*it);
+			// Erase the element from the vector
+			_components.erase(it);
+			return removed;
+		}
+
+		return nullptr; // not found
+	}
+
 	template<typename T>
 	T* GetComponent() const {
 
@@ -57,6 +73,15 @@ public:
 				return casted;
 		}
 		return nullptr;
+	}
+
+
+	std::vector<Component*> getComponents(){
+		std::vector<Component*> result;
+		result.reserve(_components.size());
+		for (auto& c : _components)
+			result.push_back(c.get());
+		return result;
 	}
 
 	Renderer* getRenderer() {
