@@ -1,0 +1,66 @@
+#pragma once
+#include "pch.h"
+#include "imgui.h"
+#include "Event.h"
+
+class Button : public Component {
+
+protected:
+	Renderer* _renderer;
+	/// <summary>
+	/// was the cursor hovering this component's renderer last update.
+	/// </summary>
+	bool wasHovering = false;
+	bool isClicked = false;
+	Event<> _onClick;
+	Event<> _onRelease;
+	Event<> _onHover;
+	Event<> _onHoverExit;
+
+	std::string _onclicktext;
+
+
+	void oc() { std::cout << _onclicktext; }
+	void oR() { std::cout << "onrelease\n"; }
+	void oh() { std::cout << "onhover\n"; }
+	void ohe() { std::cout << "onhoverexit\n"; }
+
+public:
+	Event<>& GetOnClick();
+	Event<>& GetOnRelease();
+	Event<>& GetOnHover();
+	Event<>& GetOnHoverExit();
+
+	static std::unique_ptr<Component> Create(const nlohmann::json& data) {
+		return std::make_unique<Button>(data.value("onclicktext", "onclickDefault\n"));
+	}
+
+	virtual void Start();
+
+	virtual void Update(float deltaTime);
+
+
+	Button(std::string onclicktext) :_onclicktext(onclicktext) {}
+
+
+	virtual void getImGuiParams(nlohmann::json& data) override {
+		if (!data.contains("onclicktext")) data["onclicktext"] = _onclicktext;
+
+		std::array<char, 64> buffer{};
+		std::string temp = data["onclicktext"].get<std::string>();
+		std::copy_n(temp.begin(), std::min(temp.size(), buffer.size() - 1), buffer.begin());
+
+		if (ImGui::InputText("On Click Text", buffer.data(), buffer.size())) {
+			data["onclicktext"] = std::string(buffer.data());
+		}
+	}
+
+private:
+	inline static bool registered = [] {// static bool with a lambda assignment. ensures this is calculated exactly once, at startup, to register for the SceneLoader's use later.
+		ComponentFactory::instance().Register("Button", &Button::Create);
+		return true;
+		}();
+
+
+
+};
