@@ -28,6 +28,10 @@ void GUI_Inspector::Draw() {
     if (ImGui::InputText("Name", nameBuffer.data(), nameBuffer.size())) {
         selected->SetName(std::string(nameBuffer.data()));
     }
+    int layer = selected->GetLayer();
+    if (ImGui::InputInt("Render Layer", &layer)) {
+        selected->SetLayer(layer);
+    }
 
     // --- Transform Info ---
     ImGui::SeparatorText("Transform");

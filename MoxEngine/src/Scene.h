@@ -34,9 +34,25 @@ public:
 	}
 
 	void Draw() {
-		for (auto& obj : _objects) {
-			window.draw(*obj, sf::RenderStates::Default);
+		_drawOrder.clear();
+		_drawOrder.reserve(_objects.size());
+		for (auto& obj : _objects) _drawOrder.push_back(obj.get());
+		
+		std::sort(_drawOrder.begin(), _drawOrder.end(),
+			[](GameObject* a, GameObject* b) { return a->GetLayer() < b->GetLayer(); });
+
+		for (auto* obj : _drawOrder) {
+			if (obj->GetLayer() >= -127 && obj->GetLayer() <= 128) {
+				// Normal in-world objects: use playerView
+				window.setView(playerView);
+			}
+			else {
+			 // UI objects: use default view
+				window.setView(defaultView);
+			}
+			window.draw(*obj);
 		}
+
 	}
 
 
@@ -45,4 +61,5 @@ public:
 
 private:
 	std::vector<std::unique_ptr<GameObject>> _objects;
+	std::vector<GameObject*> _drawOrder;
 };

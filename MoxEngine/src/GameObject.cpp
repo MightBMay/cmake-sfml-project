@@ -8,7 +8,7 @@ GameObject::GameObject() {
 }
 
 
-GameObject::GameObject(const sf::Vector2f& position)
+GameObject::GameObject(int renderLayer, const sf::Vector2f& position)
 {
 	_transform = std::make_unique<Transform>();
 	_transform->SetPosition(position);
@@ -32,8 +32,9 @@ void GameObject::addComponent(std::unique_ptr<Component> component) {
 
 }
 void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	if (_renderer == nullptr) return;
 	states.transform *= _transform->GetSFTransform();
-	if (_renderer != nullptr) _renderer->draw(target, states);
+	_renderer->draw(target, states);
 
 }
 
@@ -42,6 +43,7 @@ nlohmann::json GameObject::SaveToJSON() const {
 	sf::Vector2f scale = _transform->GetScale();
 	nlohmann::json data = {
 		{ "name", _name },
+		{ "renderLayer", _renderLayer},
 		{ "position", { pos.x, pos.y } },
 		{ "scale", { scale.x, scale.y } },
 		{ "rotation", _transform->GetRotationDeg() },

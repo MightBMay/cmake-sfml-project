@@ -9,12 +9,13 @@ class Renderer;
 class GameObject : public sf::Drawable{
 public:
 	std::unique_ptr<Transform> _transform;
+
 	
 private:
 	std::vector<std::unique_ptr<Component>> _components;
 	std::unique_ptr<Renderer> _renderer;
 	std::string _name = "unnamed";
-
+	int _renderLayer = 0;
 
 
 public:
@@ -89,13 +90,18 @@ public:
 		return _renderer.get();
 	}
 
+	
+
 	GameObject();
-	GameObject(const sf::Vector2f& position);
+	GameObject(int renderLayer, const sf::Vector2f& position);
 
 
 
 	void SetName(std::string name) { _name = name; }
 	std::string GetName() const { return _name; }
+	int GetLayer() { return _renderLayer; }
+	void SetLayer(int value) { _renderLayer = value; }
+
 
 
 

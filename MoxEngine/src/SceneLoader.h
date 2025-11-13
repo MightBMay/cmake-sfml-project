@@ -14,6 +14,7 @@ std::unique_ptr<GameObject> LoadGameObjectFromJSON(const nlohmann::json& data) {
 	// read and assign general object data
 	std::string name = data.value("name", "unnamed");
 	obj->SetName(name);
+	obj->SetLayer(data.value("renderLayer", 0));
 	sf::Vector2f position(data["position"][0], data["position"][1]);
 	sf::Vector2f scale(data["scale"][0], data["scale"][1]);
 	float rotation = data["rotation"];

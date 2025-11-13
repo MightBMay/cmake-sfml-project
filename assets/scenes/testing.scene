@@ -7,6 +7,7 @@
                 0.0,
                 0.0
             ],
+            "renderLayer": -121,
             "renderer": {
                 "radius": 32.0,
                 "type": "circle",
@@ -32,9 +33,10 @@
             ],
             "name": "Player",
             "position": [
-                -37.85404968261719,
-                -89.33380889892578
+                235.19000244140625,
+                -4.432976722717285
             ],
+            "renderLayer": 0,
             "renderer": {
                 "radius": 32.0,
                 "type": "circle",
