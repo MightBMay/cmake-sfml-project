@@ -9,7 +9,10 @@
 
 std::unique_ptr<GameObject> LoadGameObjectFromJSON(const nlohmann::json& data) {
 
-	auto obj = std::make_unique<GameObject>();// create object
+
+	uint64_t GUID = data.value("guid", GenerateGUID());
+
+	auto obj = std::make_unique<GameObject>(GUID);// create object
 
 	// read and assign general object data
 	std::string name = data.value("name", "unnamed");

@@ -1,4 +1,6 @@
 #include "SceneHeirarchy.h"
+#if IN_EDITOR
+
 #include "GUI_Manager.h"
 #include "GUI_Action.h"
 
@@ -43,3 +45,4 @@ void GUI_SceneHierarchy::Draw(Scene& scene) {
     ImGui::EndChild();
     ImGui::End();
 }
+#endif

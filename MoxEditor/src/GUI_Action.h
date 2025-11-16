@@ -125,3 +125,48 @@ public:
         if(_obj && _removedComponent) _obj->addComponent(std::move(_removedComponent));
     }
 };
+
+
+
+struct GUIA_AddRenderer :public GUI_Action {
+private:
+    GameObject* _obj = nullptr;
+    const std::string _rendererType;
+    const nlohmann::json& _rendererData;
+    Renderer* _toAdd = nullptr;
+public:
+    GUIA_AddRenderer(GameObject* obj, const std::string& rendererType, const nlohmann::json& rendererData):
+        _obj(obj), _rendererType(rendererType), _rendererData(rendererData){}
+
+    virtual void Execute() override {
+        auto newRenderer = RendererFactory::instance().Create(_rendererType, _rendererData);
+        _obj->setRenderer(std::move(newRenderer));
+    }
+
+    virtual void Undo() override {
+        _obj->RemoveRenderer();
+    }
+
+};
+
+
+struct GUIA_RemoveRenderer : public GUI_Action {
+
+private:
+    GameObject* _obj = nullptr;
+
+    std::unique_ptr<Renderer> _removed = nullptr;
+public:
+    GUIA_RemoveRenderer(GameObject* obj) :
+        _obj(obj) {}
+
+    virtual void Execute() override {
+        _removed = _obj->RemoveRenderer();
+    }
+
+    virtual void Undo() override {
+        _obj->setRenderer(std::move(_removed));
+    }
+
+
+};

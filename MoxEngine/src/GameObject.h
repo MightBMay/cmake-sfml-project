@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "json.hpp"
 
+
 class Component;
 class Renderer;
 //class Transform;
@@ -16,6 +17,8 @@ private:
 	std::unique_ptr<Renderer> _renderer;
 	std::string _name = "unnamed";
 	int _renderLayer = 0;
+	uint64_t _guid;
+
 
 
 public:
@@ -30,6 +33,10 @@ public:
 
 	void setRenderer(std::unique_ptr<Renderer> renderer) {
 		_renderer = std::move(renderer);
+	}
+
+	std::unique_ptr<Renderer> RemoveRenderer() {
+		return std::move(_renderer);
 	}
 
 	template<typename T, typename... Args>
@@ -75,6 +82,7 @@ public:
 				return casted;
 		}
 		return nullptr;
+
 	}
 
 
@@ -93,23 +101,28 @@ public:
 	
 
 	GameObject();
+	GameObject(uint64_t GUID);
 	GameObject(int renderLayer, const sf::Vector2f& position);
 
 
 
 	void SetName(std::string name) { _name = name; }
 	std::string GetName() const { return _name; }
+
+
 	int GetLayer() { return _renderLayer; }
 	void SetLayer(int value) { _renderLayer = value; }
 
-
+	const uint64_t GetGUID() const { return _guid; }
 
 
 	virtual void Update(float deltaTime);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+#if IN_EDITOR
 	nlohmann::json SaveToJSON() const;
+#endif
 
 };
 

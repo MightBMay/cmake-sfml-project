@@ -1,4 +1,6 @@
 #pragma once
+#if IN_EDITOR
+
 #include <stack>
 #include "GUI_Action.h"
 #include "GUI_Inspector.h"
@@ -93,3 +95,5 @@ public:
 
 
 };
+
+#endif

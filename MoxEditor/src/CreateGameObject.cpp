@@ -1,4 +1,5 @@
 #include "CreateGameObject.h"
+#if IN_EDITOR
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "GUI_Action.h"
@@ -160,3 +161,4 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
 
     ImGui::End();
 }
+#endif

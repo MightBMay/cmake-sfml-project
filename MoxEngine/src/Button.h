@@ -1,8 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "imgui.h"
 #include "Event.h"
-
+#include "imgui.h"
 class Button : public Component {
 
 protected:
@@ -33,7 +32,8 @@ public:
 
 	static std::unique_ptr<Component> Create(const nlohmann::json& data) {
 		bool enabled = data.value("enabled", true);
-		return std::make_unique<Button>(enabled, data.value("onclicktext", "onclickDefault\n"));
+		uint64_t guid = data.value("guid", GenerateGUID());
+		return std::make_unique<Button>(guid, enabled, data.value("onclicktext", "onclickDefault\n"));
 	}
 
 	virtual void Start();
@@ -41,9 +41,10 @@ public:
 	virtual void Update(float deltaTime);
 
 
-	Button(bool enabled, std::string onclicktext) :_onclicktext(onclicktext) { _enabled = enabled; }
+	Button(uint64_t guid, bool enabled, std::string onclicktext) :Component(guid), _onclicktext(onclicktext) { _enabled = enabled; }
 	virtual std::string GetName() const override { static std::string name = "Button"; return  name; };
 
+#if IN_EDITOR
 
 	virtual void getImGuiParams(nlohmann::json& data) override {
 		if (!data.contains("onclicktext")) data["onclicktext"] = _onclicktext;
@@ -75,9 +76,12 @@ public:
 	virtual nlohmann::json SaveToJSON() const override {
 		nlohmann::json data;
 		data["type"] = GetName();
+		data["guid"] = GetGUID();
 		data["onclicktext"] = _onclicktext;
 		return data;
 	}
+
+#endif
 
 private:
 	inline static bool registered = [] {// static bool with a lambda assignment. ensures this is calculated exactly once, at startup, to register for the SceneLoader's use later.

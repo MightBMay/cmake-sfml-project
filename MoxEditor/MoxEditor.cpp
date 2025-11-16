@@ -6,21 +6,31 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "imgui_internal.h"
-
-
+#include "ImGuiFileDialog.h"
+#include "config.h"
+#include <fstream>
 #include "json.hpp"
 #include "SFML/Graphics.hpp"
-#include <fstream>
+
 #include "SceneLoader.h"
+
+#include "ComponentImport.h"
+
 #include "CircleRenderer.h"
 #include "RectRenderer.h"
+#include "SpriteRenderer.h"
+
+
+#if IN_EDITOR
 
 #include "CreateGameObject.h"
 #include "SceneHeirarchy.h"
 #include "GUI_Manager.h"
 #include "GUI_Inspector.h"
 
-#include "ComponentImport.h"
+#endif
+
+
 
 using json = nlohmann::json;
 
@@ -31,6 +41,7 @@ sf::View defaultView;
 std::unique_ptr<Scene> scene;
 Scene* curScene;
 
+#if IN_EDITOR
 void DrawGUI(Scene& scene) {
     GUI_CreateGameObject::instance().Draw(scene);
     GUI_SceneHierarchy::instance().Draw(scene);
@@ -38,6 +49,8 @@ void DrawGUI(Scene& scene) {
     GUI_Inspector::instance().Draw();
 
 }
+
+#endif
 
 
 
@@ -54,7 +67,10 @@ int main()
    
     window.setFramerateLimit(60);
     
+
+#if IN_EDITOR
     ImGui::SFML::Init(window);
+#endif
     sf::Clock deltaClock;
     bool sceneLoaded = false;
     std::ifstream file("../assets/scenes/testing.scene");
@@ -86,22 +102,28 @@ int main()
 
 
         window.clear(sf::Color(40,40,40));
+#if IN_EDITOR
         ImGui::SFML::Update(window, dt);
+#endif
 
         while (const std::optional event = window.pollEvent()) {
             if (!event.has_value()) continue;
             Input::HandleEvent(event);
             const sf::Event& _event = *event;
+#if IN_EDITOR
             ImGui::SFML::ProcessEvent(window, _event);
+#endif
             if (event->is<sf::Event::Closed>()) window.close();
 
         }
-
+#if IN_EDITOR
         DrawGUI(*curScene);
+
 
         if (Input::GetKeyDown(sf::Keyboard::Scan::Down)) {
             curScene->SaveToFile("testing.scene");
         }
+#endif
         
         scene->Update(deltaTime);
         window.setView(playerView);
@@ -109,12 +131,16 @@ int main()
 
         
         
-
+#if IN_EDITOR
         ImGui::SFML::Render(window);
+#endif
         window.display();
     }
 
+#if IN_EDITOR
     ImGui::SFML::Shutdown();
+    curScene->SaveToFile("testing.scene");
+#endif
     return 0;
 
 }

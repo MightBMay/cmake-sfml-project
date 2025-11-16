@@ -12,6 +12,10 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+#include "config.h"
+#include "Utility.h"
+#include "GUID.h"
+
 #include "Transform.h"
 #include "GameObject.h"
 #include "Component.h"

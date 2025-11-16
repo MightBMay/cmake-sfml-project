@@ -7,21 +7,24 @@
 class CameraController: public Component
 {
 private:
-    Transform* _transform;
+    Transform* _transform = nullptr;
     float _moveSpeed = 300.0f;          // Movement speed in units per second
     float _zoomSpeed = 1.0f;            // Speed of zoom
     float _currentZoom = 1.0f;          // Current zoom level
     bool _active = true;                // Whether this camera is currently controlling the view
+
+    
 
 public:
 
     static std::unique_ptr<Component> Create(const nlohmann::json& data) {
 
         bool enabled = data.value("enabled", true);
-        return std::make_unique<CameraController>(enabled);
+        uint64_t guid = data.value("guid", GenerateGUID());
+        return std::make_unique<CameraController>(guid, enabled);
     }
 
-    CameraController(bool enabled) {
+    CameraController(uint64_t guid, bool enabled):Component(guid) {
         _enabled = enabled; 
 
     };
@@ -42,6 +45,8 @@ public:
         
     }
 
+#if IN_EDITOR
+
     virtual void getImGuiParams(nlohmann::json& data) override {
         std::string label = "CameraController##" + std::to_string(reinterpret_cast<uintptr_t>(this));
         if (ImGui::InputFloat(label.c_str(), &_moveSpeed)) {
@@ -59,9 +64,11 @@ public:
     {
         nlohmann::json data;
         data["type"] = "CameraController";
+        data["guid"] = GetGUID();
         data["enabled"] = _enabled;
         return data;
     }
+#endif
 
 private:
     inline static bool registered = [] {

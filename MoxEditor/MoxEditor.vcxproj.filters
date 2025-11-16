@@ -110,5 +110,8 @@
     <ClInclude Include="src\ComponentImport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\MoxEngine\src\CameraController.h">
+      <Filter>Game Code\Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

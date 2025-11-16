@@ -59,9 +59,9 @@ public:
 
 	}
 
-
+#if IN_EDITOR
 	void SaveToFile(const std::string& filename);
-
+#endif
 
 private:
 	std::vector<std::unique_ptr<GameObject>> _objects;

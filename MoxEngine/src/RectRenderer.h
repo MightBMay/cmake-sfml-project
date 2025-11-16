@@ -10,19 +10,53 @@ private:
 
 public:
 	static std::unique_ptr<Renderer> Create(const nlohmann::json& data) {
-		float width = 0, height = 0;
-		if (data.contains("width")) width = data["width"];
-		if (data.contains("height")) height = data["height"];
+		
+		float width = data.value("width", 0); 
+		float height = data.value("height", 0);
 
-		return std::make_unique<RectRenderer>(sf::Vector2f( width, height ));
+
+		sf::Color colour = sf::Color::White;
+		if (data.contains("colour"))
+			sf::Color colour = sf::Color(
+				data["colour"][0],
+				data["colour"][1],
+				data["colour"][2],
+				data["colour"][3]
+			);
+
+		return std::make_unique<RectRenderer>(sf::Vector2f( width, height ), colour);
 	}
 
-	RectRenderer(sf::Vector2f size) {
+	RectRenderer(sf::Vector2f size, sf::Color colour) {
 		_rectShape = std::make_unique<sf::RectangleShape>(size);
+		_rectShape->setFillColor(colour);
+		_rectShape->setOrigin(size / 2.0f);
 		_drawable = _rectShape.get();
 	}
 
+
+	virtual void SetSize(sf::Vector2f newSize) {
+		_rectShape->setSize(newSize);
+		_rectShape->setOrigin({ newSize.x/2, newSize.y/2});
+	}
+
+	virtual sf::FloatRect GetGlobalBounds() const override {
+		return _transform->GetSFTransform().transformRect(_rectShape->getGlobalBounds());
+	}
+
+#if IN_EDITOR
+
 	virtual void getImGuiParams(nlohmann::json& data) override {
+
+		if (!data.contains("colour")) data["colour"] = { 1,1,1,1 };
+		float colourRaw[4];
+		if (ImGui::InputFloat4("Colour", colourRaw)) {
+			_rectShape->setFillColor(
+				sf::Color(colourRaw[0], colourRaw[1], colourRaw[2], colourRaw[3])
+			);
+		}
+
+
 		if (!data.contains("width"))       data["width"] = _defaultWidth;
 		if (!data.contains("height"))  data["height"] = _defaultHeight;
 
@@ -34,11 +68,21 @@ public:
 	}
 
 	virtual void getInspectorParams() override {
+
 		ImGui::SeparatorText("Rect Renderer");
+		sf::Color curCol = _rectShape->getFillColor();
+		float colourRaw[4] = { curCol.r, curCol.g, curCol.b, curCol.a };
+		if (ImGui::InputFloat4("Colour", colourRaw)) {
+			_rectShape->setFillColor(
+				sf::Color(colourRaw[0], colourRaw[1], colourRaw[2], colourRaw[3])
+			);
+		}
+
+
 		sf::Vector2f size = _rectShape->getSize();
 		float width = size.x, height = size.y;
 		if (ImGui::InputFloat("Width", &width)) {
-			if (width< 0.0f) width= 0.0f;
+			if (width < 0.0f) width = 0.0f;
 			_rectShape->setSize({ width,height });
 		}
 
@@ -49,19 +93,16 @@ public:
 	}
 
 
-
-	virtual sf::FloatRect GetGlobalBounds() const override {
-		return _transform->GetSFTransform().transformRect(_rectShape->getGlobalBounds());
-	}
-	
 	virtual nlohmann::json SaveToJSON() const override {
 		nlohmann::json data;
 		sf::Vector2f size = _rectShape->getSize();
 		data["type"] = "rectangle";
+		data["colour"] = _rectShape->getFillColor();;
 		data["width"] = size.x;
 		data["height"] = size.y;
 		return data;
 	}
+#endif
 
 
 private:

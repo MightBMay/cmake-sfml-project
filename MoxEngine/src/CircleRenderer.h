@@ -15,23 +15,54 @@ public:
 
 	static std::unique_ptr<Renderer> Create(const nlohmann::json& data) {
 
-		float radius = 0;
-		int vertexCount = 0;
-		if (data.contains("radius")) radius = data["radius"];
+		float radius = data.value("radius", 0); 
 			
-		if (data.contains("vertexCount")) vertexCount = data["vertexCount"];
+		int vertexCount = data.value("vertexCount", 3);
+		
+		sf::Color colour = data.value("colour", sf::Color::White);
+		
 
-		return std::make_unique<CircleRenderer>(radius, vertexCount);
+		return std::make_unique<CircleRenderer>(radius, vertexCount, colour);
 	}
 
-	CircleRenderer(float radius =0, float vertexCount = 32) : Renderer() {
+	CircleRenderer(float radius =0, int vertexCount = 32, sf::Color colour = sf::Color::White) : Renderer() {
 		_circleShape = std::make_unique<sf::CircleShape>(radius, vertexCount);
+		_circleShape->setFillColor(colour);
+		_circleShape->setOrigin({radius, radius});
 		_drawable = _circleShape.get();
+
 		
 	}
 
 
+	virtual sf::FloatRect GetGlobalBounds() const override {
+	// since gameobject has its own transform and we just multiply the shape transform by that to position it on screen, we gotta do this to reflect its position.
+		return _transform->GetSFTransform().transformRect(_circleShape->getGlobalBounds());
+	}
+
+
+
+
+	void SetRadius(float newRadius) {
+		_circleShape->setRadius(newRadius);
+		_circleShape->setOrigin({ newRadius, newRadius });
+	}
+
+
+#if IN_EDITOR
 	virtual void getImGuiParams(nlohmann::json& data) override {
+
+
+		if (!data.contains("colour")) data["colour"] = { 255,255,255,255 };
+		float colourRaw[4] = {255,255,255,255};
+		if (ImGui::InputFloat4("Colour", colourRaw)) {
+			_circleShape->setFillColor(
+				sf::Color(colourRaw[0], colourRaw[1], colourRaw[2], colourRaw[3])
+			);
+		}
+
+
+
 		if (!data.contains("radius"))       data["radius"] = _radius;
 		if (!data.contains("vertexCount"))  data["vertexCount"] = _vertexCount;
 
@@ -43,7 +74,17 @@ public:
 	}
 
 	virtual void getInspectorParams() override {
+
 		ImGui::SeparatorText("Circle Renderer");
+
+		sf::Color curCol = _circleShape->getFillColor();
+		float colourRaw[4] = { curCol.r, curCol.g, curCol.b, curCol.a };
+		if (ImGui::InputFloat4("Colour", colourRaw)) {
+			_circleShape->setFillColor(
+				sf::Color(colourRaw[0], colourRaw[1], colourRaw[2], colourRaw[3])
+			);
+		}
+
 		float radius = _circleShape->getRadius();
 		if (ImGui::InputFloat("Radius", &radius)) {
 			if (radius < 0.0f) radius = 0.0f;
@@ -58,26 +99,20 @@ public:
 	}
 
 
-	virtual sf::FloatRect GetGlobalBounds() const override {
-		// since gameobject has its own transform and we just multiply the shape transform by that to position it on screen, we gotta do this to reflect its position.
-		return _transform->GetSFTransform().transformRect(_circleShape->getGlobalBounds());
-	}
 
-
-
-
-	void SetRadius(float newRadius) {
-		_circleShape->setRadius(newRadius);
-	}
 
 	virtual nlohmann::json SaveToJSON() const override {
 		nlohmann::json data;
 		data["type"] = "circle";
 		data["radius"] = _circleShape->getRadius();
+
+		sf::Color curCol = _circleShape->getFillColor();
+		data["colour"] = curCol;
+
 		data["vertexCount"] = _circleShape->getPointCount();
 		return data;
 	}
-
+#endif
 
 private:
 	inline static bool registered = [] {

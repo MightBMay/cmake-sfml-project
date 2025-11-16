@@ -5,6 +5,11 @@
 
 GameObject::GameObject() {
 	_transform = std::make_unique<Transform>();
+	_guid = GenerateGUID();
+}
+
+GameObject::GameObject(uint64_t GUID) :_guid(GUID){
+	_transform = std::make_unique<Transform>();
 }
 
 
@@ -12,6 +17,7 @@ GameObject::GameObject(int renderLayer, const sf::Vector2f& position)
 {
 	_transform = std::make_unique<Transform>();
 	_transform->SetPosition(position);
+	_guid = GenerateGUID();
 
 }
 
@@ -37,12 +43,14 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	_renderer->draw(target, states);
 
 }
+#if IN_EDITOR
 
 nlohmann::json GameObject::SaveToJSON() const {
 	sf::Vector2f pos = _transform->GetPosition();
 	sf::Vector2f scale = _transform->GetScale();
 	nlohmann::json data = {
 		{ "name", _name },
+		{ "guid", _guid},
 		{ "renderLayer", _renderLayer},
 		{ "position", { pos.x, pos.y } },
 		{ "scale", { scale.x, scale.y } },
@@ -57,3 +65,4 @@ nlohmann::json GameObject::SaveToJSON() const {
 
 	return data;
 }
+#endif

@@ -1,5 +1,10 @@
 #include "GUI_Inspector.h"
 #include "GUI_Manager.h"
+
+#if IN_EDITOR
+#include "imgui.h"
+
+
 void GUI_Inspector::Draw() {
     if (!_isVisible) return;
     ImGui::Begin("Inspector");
@@ -17,6 +22,10 @@ void GUI_Inspector::Draw() {
     // --- Object Info ---
     ImGui::SeparatorText("GameObject Info");
 
+    ImGui::TextColored(
+        ImVec4(0.4, 0.4, 0.4, 1), 
+        ("GUID: " + std::to_string(selected->GetGUID()) ).c_str()
+    );
 
 
     std::array<char, 64> nameBuffer{};
@@ -28,6 +37,7 @@ void GUI_Inspector::Draw() {
     if (ImGui::InputText("Name", nameBuffer.data(), nameBuffer.size())) {
         selected->SetName(std::string(nameBuffer.data()));
     }
+
     int layer = selected->GetLayer();
     if (ImGui::InputInt("Render Layer", &layer)) {
         selected->SetLayer(layer);
@@ -47,14 +57,72 @@ void GUI_Inspector::Draw() {
     if (ImGui::InputFloat("Rotation", &rot))
         transform->SetRotation(rot);
 
+
+
+#pragma region renderer
+
+
+
     // --- Renderer Info ---
+
+
+    ImGui::SeparatorText("Renderer");
     Renderer* renderer = selected->getRenderer();
+    if (!_addingRenderer) {
+
+
+        
+        if (!renderer) {
+
+            ImGui::SameLine();
+            if (ImGui::Button("Add Renderer")) {
+                _addingRenderer = true;
+                rendererData = nlohmann::json::object();
+            }
+        }
+        else {
+            ImGui::SameLine();
+            if (ImGui::Button("Remove Renderer")) {
+                auto action = std::make_unique<GUIA_RemoveRenderer>(selected);
+                GUI_Manager::instance().ExecuteAction(std::move(action));
+            }
+        }
+    }
+    else {
+        ImGui::Indent(20);
+
+
+        const std::vector<std::string> rendererTypes = RendererFactory::instance().GetTypes();
+        std::vector<const char*> rendererOptions;
+        rendererOptions.reserve(rendererTypes.size());
+        for (auto& s : rendererTypes) rendererOptions.push_back(s.c_str());
+
+        if (!rendererOptions.empty()) {
+            ImGui::Combo("Renderer Type", &selectedRendererIndex, rendererOptions.data(), (int)rendererOptions.size());
+            std::string selectedRenderer = rendererOptions[selectedRendererIndex];
+        }
+
+
+        if (ImGui::Button("Confirm")) {
+            auto action = std::make_unique<GUIA_AddRenderer>(selected, rendererOptions[selectedRendererIndex], rendererData);
+            GUI_Manager::instance().ExecuteAction(std::move(action));
+            _addingRenderer = false;
+        }
+
+        ImGui::Unindent(20);
+    }
+
+
     if (renderer) {
         renderer->getInspectorParams(); // calls each renderer’s own inspector UI
     }
     else {
         ImGui::SeparatorText("No renderer assigned.");
     }
+
+
+#pragma endregion
+
 
     // --- Component Info ---
     ImGui::SeparatorText("Components");
@@ -83,14 +151,14 @@ void GUI_Inspector::Draw() {
 
             std::string selectedComponent = componentOptions[selectedComponentIndex];
 
-            // Show parameters for the selected component
-            try {
-                auto tempComponent = ComponentFactory::instance().Create(selectedComponent, componentData);
-                tempComponent->getInspectorParams(); // NOTE: use inspector version
-            }
-            catch (const std::exception& e) {
-                ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error with component UI: %s", e.what());
-            }
+            //// Show parameters for the selected component
+            //try {
+            //    auto tempComponent = ComponentFactory::instance().Create(selectedComponent, componentData);
+            //    tempComponent->getInspectorParams(); // NOTE: use inspector version
+            //}
+            //catch (const std::exception& e) {
+            //    ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error with component UI: %s", e.what());
+            //}
         }
 
         // Confirm and Cancel buttons
@@ -119,6 +187,9 @@ void GUI_Inspector::Draw() {
 
 
 
+
+
+#pragma region Component Inspector
 
 
 
@@ -163,5 +234,9 @@ void GUI_Inspector::Draw() {
         ImGui::SeparatorText("No components attached.");
     }
 
+#pragma endregion
+
     ImGui::End();
 }
+
+#endif

@@ -1,0 +1,33 @@
+﻿  MoxEditor.cpp
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(53,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from 'TargetType' to 'float', possible loss of data
+          with
+          [
+              TargetType=int
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(24,15): message : see reference to function template instantiation 'std::unique_ptr<CircleRenderer,std::default_delete<CircleRenderer>> std::make_unique<CircleRenderer,float&,int&,0>(float &,int &)' being compiled
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from 'TargetType' to 'size_t', possible loss of data
+          with
+          [
+              TargetType=float
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(28,23): message : see reference to function template instantiation 'std::unique_ptr<sf::CircleShape,std::default_delete<sf::CircleShape>> std::make_unique<sf::CircleShape,float&,float&,0>(float &,float &)' being compiled
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(23,15): message : see reference to function template instantiation 'std::unique_ptr<PlayerMovement,std::default_delete<PlayerMovement>> std::make_unique<PlayerMovement,uint64_t&,bool&,ReturnType,0>(uint64_t &,bool &,ReturnType &&)' being compiled
+          with
+          [
+              ReturnType=int
+          ]
+  CreateGameObject.cpp
+  SceneHeirarchy.cpp
+  Generating code
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(43): warning C4172: returning address of local variable or temporary
+  523 of 4955 functions (10.6%) were compiled, the rest were copied from previous compilation.
+    6 functions were new in current compilation
+    711 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release (No Editor)\MoxEditor.exe

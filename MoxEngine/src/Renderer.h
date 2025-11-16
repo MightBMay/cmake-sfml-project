@@ -6,7 +6,7 @@ class Renderer {
 protected:
 	Transform* _transform = nullptr;
 	sf::Drawable* _drawable = nullptr;
-
+	
 
 public:
 	virtual ~Renderer() = default;
@@ -15,8 +15,7 @@ public:
 	Renderer(Transform* transform) { _transform = transform; }
 
 
-	virtual void getImGuiParams(nlohmann::json& data) = 0;
-	virtual void getInspectorParams() = 0;
+
 
 	void SetTransform(Transform* transform) {
 		_transform = transform;
@@ -36,9 +35,12 @@ public:
 
 		return GetGlobalBounds().contains( sf::Vector2f(point) );
 	}
-
+#if IN_EDITOR
+	virtual void getImGuiParams(nlohmann::json& data) = 0;
+	virtual void getInspectorParams() = 0;
 
 	virtual nlohmann::json SaveToJSON() const = 0;
+#endif
 
 
 };

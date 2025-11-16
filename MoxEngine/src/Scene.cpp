@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-
+#if IN_EDITOR
 void Scene::SaveToFile(const std::string& filename) {
 	nlohmann::json sceneJson = {
 		{"scene name", filename},
@@ -19,3 +19,4 @@ void Scene::SaveToFile(const std::string& filename) {
 		file << sceneJson.dump(4); // pretty print with 4-space indentation
 	}
 }
+#endif
