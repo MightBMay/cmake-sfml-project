@@ -1,10 +1,7 @@
-﻿  GUI_Inspector.cpp
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp(26,26): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp(26,21): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp(26,16): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  GUI_Action.cpp
   Generating code
-  119 of 6557 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
-    48 functions were new in current compilation
-    255 functions had inline decision re-evaluated but remain unchanged
+  67 of 6558 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    45 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe

@@ -1,7 +1,7 @@
 #include "GUI_Action.h"
 #include "pch.h"
 #include "GUI_Manager.h"
-#include "CreateGameObject.h"
+#include "GUI_CreateGameObject.h"
 #include "Scene.h"
 #include "ComponentFactory.h"
 #include "SceneHeirarchy.h"

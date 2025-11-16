@@ -1,4 +1,4 @@
-#include "CreateGameObject.h"
+#include "GUI_CreateGameObject.h"
 #if IN_EDITOR
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -9,7 +9,7 @@
 void GUI_CreateGameObject::Draw(Scene& scene) {
     if (!_isVisible) return;
     ImGui::Begin("Create GameObject", &_isVisible,
-        ImGuiWindowFlags_AlwaysAutoResize);
+        ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
     
    
     ImGui::InputText("Name", name, 64);

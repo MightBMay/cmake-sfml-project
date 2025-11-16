@@ -59,11 +59,12 @@ public:
 
 	}
 
-	virtual void SetTextureRect(sf::Vector2f newSize) {
+	virtual void SetOrigin() {
 		sf::IntRect rect = _sprite->getTextureRect();
-		rect.size = sf::Vector2i(newSize.x, newSize.y );
-		_sprite->setTextureRect(rect);
-		_sprite->setOrigin({ newSize.x / 2, newSize.y / 2 });
+		_sprite->setOrigin(sf::Vector2f(rect.size.x / 2.0f, rect.size.y / 2.0f ));
+	}
+	virtual void SetOrigin(sf::Vector2i& newOrigin) {
+		_sprite->setOrigin(sf::Vector2f(newOrigin.x, newOrigin.y));
 	}
 
 	virtual sf::FloatRect GetGlobalBounds() const override {
@@ -211,6 +212,8 @@ public:
 			);
 
 			_sprite->setTextureRect(newRect);
+			SetOrigin();
+			std::cout << "changed";
 
 			
 		}

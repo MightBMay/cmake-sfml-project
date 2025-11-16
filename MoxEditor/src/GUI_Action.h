@@ -1,5 +1,5 @@
 #pragma once
-#include "CreateGameObject.h"
+#include "GUI_CreateGameObject.h"
 
 struct GUI_Action
 {

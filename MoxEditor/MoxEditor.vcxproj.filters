@@ -89,7 +89,7 @@
     <ClInclude Include="src\imstb_truetype.h">
       <Filter>Header Files\Imgui stuff</Filter>
     </ClInclude>
-    <ClInclude Include="src\CreateGameObject.h">
+    <ClInclude Include="src\GUI_CreateGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerMovement.h">

@@ -2,7 +2,7 @@
 #pragma once
 #include "Scene.h"
 #include "GameObject.h"
-#include "CreateGameObject.h"
+#include "GUI_CreateGameObject.h"
 
 #include <memory>
 

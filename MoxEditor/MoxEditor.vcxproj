@@ -219,7 +219,7 @@
   <ItemGroup>
     <ClInclude Include="..\MoxEngine\src\CameraController.h" />
     <ClInclude Include="src\ComponentImport.h" />
-    <ClInclude Include="src\CreateGameObject.h" />
+    <ClInclude Include="src\GUI_CreateGameObject.h" />
     <ClInclude Include="src\GUI_Action.h" />
     <ClInclude Include="src\GUI_Inspector.h" />
     <ClInclude Include="src\GUI_Manager.h" />

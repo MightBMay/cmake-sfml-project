@@ -23,7 +23,7 @@
 
 #if IN_EDITOR
 
-#include "CreateGameObject.h"
+#include "GUI_CreateGameObject.h"
 #include "SceneHeirarchy.h"
 #include "GUI_Manager.h"
 #include "GUI_Inspector.h"
