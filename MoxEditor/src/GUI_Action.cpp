@@ -17,6 +17,7 @@ void GUIA_CreateGameObject::Execute() {
       // --- Create the GameObject ---
     auto obj = std::make_unique<GameObject>();
     obj->SetName(_name);
+    obj->SetLayer(_renderLayer);
     obj->_transform->SetTransform({ _pos[0], _pos[1] }, { _scale[0], _scale[1] }, _rot);
 
     // --- Create renderer ---

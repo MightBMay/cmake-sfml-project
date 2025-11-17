@@ -13,6 +13,7 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
     
    
     ImGui::InputText("Name", name, 64);
+    ImGui::InputInt("Render Layer", &renderLayer);
     ImGui::SeparatorText("Transform");
     ImGui::InputFloat2("Position", pos);
     ImGui::InputFloat2("Scale", scale);
@@ -128,8 +129,7 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
     
 
 
-
-
+#pragma region Create Button
 
     // Create button
     if (ImGui::Button("Create")) {
@@ -142,6 +142,7 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
         auto action = std::make_unique<GUIA_CreateGameObject>(
             &scene,
             std::string(name),
+            renderLayer,
             pos,
             scale,
             rot,
@@ -158,6 +159,7 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
 
 
     }
+#pragma endregion
 
     ImGui::End();
 }

@@ -6,4 +6,4 @@ extern sf::RenderWindow window;
 extern sf::View playerView;
 extern sf::View defaultView;
 
-extern Scene* curScene;
+extern std::unique_ptr<Scene> scene;

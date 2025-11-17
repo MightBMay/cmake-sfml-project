@@ -15,6 +15,7 @@ private:
     
     // Persistent GUI state
     char name[64] = "NewObject";
+    int renderLayer = 0;
     float pos[2] = { 0.f, 0.f };
     float scale[2] = { 1.f, 1.f };
     float rot = 0.f;

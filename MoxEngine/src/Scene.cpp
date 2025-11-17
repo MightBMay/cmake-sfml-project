@@ -3,9 +3,10 @@
 #include "GameObject.h"
 
 #if IN_EDITOR
-void Scene::SaveToFile(const std::string& filename) {
+void Scene::SaveToFile() {
+
 	nlohmann::json sceneJson = {
-		{"scene name", filename},
+		{"sceneName", _sceneName},
 		{"objects", nlohmann::json::array()}
 	};
 
@@ -14,7 +15,8 @@ void Scene::SaveToFile(const std::string& filename) {
 	}
 
 	// Write to file
-	std::ofstream file("../assets/scenes/" + filename);
+	
+	std::ofstream file("../assets/scenes/" + _sceneName);
 	if (file.is_open()) {
 		file << sceneJson.dump(4); // pretty print with 4-space indentation
 	}

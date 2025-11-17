@@ -15,8 +15,8 @@ public:
 private:
 	std::vector<std::unique_ptr<Component>> _components;
 	std::unique_ptr<Renderer> _renderer;
-	std::string _name = "unnamed";
 	int _renderLayer = 0;
+	std::string _name = "unnamed";
 	uint64_t _guid;
 
 

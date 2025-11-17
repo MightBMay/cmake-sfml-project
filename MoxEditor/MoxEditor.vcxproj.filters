@@ -63,6 +63,12 @@
     <ClCompile Include="src\SceneHeirarchy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI_Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGuiFileDialog.cpp">
+      <Filter>Header Files\Imgui stuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\imconfig.h">
@@ -112,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="..\MoxEngine\src\CameraController.h">
       <Filter>Game Code\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGuiFileDialog.h">
+      <Filter>Header Files\Imgui stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGuiFileDialogConfig.h">
+      <Filter>Header Files\Imgui stuff</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

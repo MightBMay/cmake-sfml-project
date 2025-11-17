@@ -1,6 +1,6 @@
 #include "SceneHeirarchy.h"
 #if IN_EDITOR
-
+#include "imgui.h"
 #include "GUI_Manager.h"
 #include "GUI_Action.h"
 

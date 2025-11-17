@@ -27,6 +27,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\MoxEditor\src\ImGuiFileDialog.h" />
+    <ClInclude Include="..\MoxEditor\src\ImGuiFileDialogConfig.h" />
     <ClInclude Include="src\Button.h" />
     <ClInclude Include="src\CircleRenderer.h" />
     <ClInclude Include="src\Component.h" />
@@ -49,6 +51,9 @@
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MoxEditor\src\ImGuiFileDialog.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Input.cpp" />
@@ -60,6 +65,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release (No Editor)|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\SpriteRenderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

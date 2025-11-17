@@ -37,6 +37,7 @@ struct  GUIA_CreateGameObject : public GUI_Action
 private:
     Scene* _scene = nullptr;
     std::string _name;
+    int _renderLayer;
     float _pos[2];
     float _scale[2];
     float _rot;
@@ -52,9 +53,10 @@ public:
     GUIA_CreateGameObject(
         Scene* scene,
         const std::string& name,
+        const int renderLayer,
         const float pos[2],
         const float scale[2],
-        float rot,
+        const float rot,
         const std::string& rendererType,
         const nlohmann::json& rendererData,
         const std::vector<QueuedComponent>& components

@@ -33,6 +33,10 @@ public:
 		}
 	}
 
+	void SetName(std::string newName) {
+		_sceneName = newName;
+	}
+
 	void Draw() {
 		_drawOrder.clear();
 		_drawOrder.reserve(_objects.size());
@@ -60,10 +64,14 @@ public:
 	}
 
 #if IN_EDITOR
-	void SaveToFile(const std::string& filename);
+	void Save();
 #endif
 
 private:
+#if IN_EDITOR
+	void SaveToFile();
+#endif
 	std::vector<std::unique_ptr<GameObject>> _objects;
 	std::vector<GameObject*> _drawOrder;
+	std::string _sceneName = "";
 };

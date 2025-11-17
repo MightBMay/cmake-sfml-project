@@ -6,7 +6,6 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "imgui_internal.h"
-#include "ImGuiFileDialog.h"
 #include "config.h"
 #include <fstream>
 #include "json.hpp"
@@ -39,7 +38,6 @@ sf::View playerView;
 sf::View defaultView;
 
 std::unique_ptr<Scene> scene;
-Scene* curScene;
 
 #if IN_EDITOR
 void DrawGUI(Scene& scene) {
@@ -73,23 +71,11 @@ int main()
 #endif
     sf::Clock deltaClock;
     bool sceneLoaded = false;
-    std::ifstream file("../assets/scenes/testing.scene");
-    if (!file.is_open()) {
-        std::cerr << "failed to open scene \n";
-    }
 
-    json data;
-    try {
-        file >> data;
-        sceneLoaded = true;
-    }
-    catch (const json::parse_error& e) {
-        std::cerr << "JSON parse error: " << e.what() << "\n";
-    }
- 
-    if (sceneLoaded) scene = LoadScene(data);
-    else scene = std::make_unique<Scene>();
-    curScene = scene.get();
+
+    scene = SceneLoader::LoadSceneFromPath("../assets/scenes/testing.scene");
+    if (!scene) scene = std::make_unique<Scene>();
+
 
 
 
@@ -117,12 +103,7 @@ int main()
 
         }
 #if IN_EDITOR
-        DrawGUI(*curScene);
-
-
-        if (Input::GetKeyDown(sf::Keyboard::Scan::Down)) {
-            curScene->SaveToFile("testing.scene");
-        }
+        DrawGUI(*scene);
 #endif
         
         scene->Update(deltaTime);
@@ -139,7 +120,7 @@ int main()
 
 #if IN_EDITOR
     ImGui::SFML::Shutdown();
-    curScene->SaveToFile("testing.scene");
+    scene->SaveToFile();
 #endif
     return 0;
 

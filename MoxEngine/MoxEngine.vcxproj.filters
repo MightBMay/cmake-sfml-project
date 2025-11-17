@@ -31,6 +31,9 @@
     <Filter Include="Header Files\SceneLoading">
       <UniqueIdentifier>{6419cbfd-086d-4b0b-b268-cd0eaf3557bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{e71a8138-1583-4edb-9c49-bd0c2f8742cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Button.h">
@@ -93,6 +96,12 @@
     <ClInclude Include="src\config.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
+    <ClInclude Include="..\MoxEditor\src\ImGuiFileDialog.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MoxEditor\src\ImGuiFileDialogConfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject.cpp">
@@ -109,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="src\Scene.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MoxEditor\src\ImGuiFileDialog.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
