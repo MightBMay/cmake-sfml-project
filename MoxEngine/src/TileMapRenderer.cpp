@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TileMapRenderer.h"
 #include "ImGUI.h"
+#include "ImGuiFileDialog.h"
 
 void TileMapRenderer::setTilemap(std::unique_ptr<TileMap> newMap)
 {
@@ -56,9 +57,6 @@ void TileMapRenderer::rebuild()
 
 void TileMapRenderer::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
-    if (!_tileMap) {
-        setTilemap(CreateTestTileMap());
-    }
     if (!_tileMap || !_tileMap->tileset)
         return;
 
@@ -73,16 +71,82 @@ void TileMapRenderer::getImGuiParams(nlohmann::json& data){}
 
 void TileMapRenderer::getInspectorParams(){
 
+    ImGui::SeparatorText("TileMap Renderer");
+
+    bool changeMade = false;
+
+#pragma region Texture Select Dialog
+
+
+
+    IGFD::FileDialogConfig config;
+    config.path = "../assets/tilemaps";
+    config.countSelectionMax = 1;
+
+
+    if (ImGui::Button("Select Texture")) {
+        ImGuiFileDialog::Instance()->OpenDialog(
+            "ChooseTextureDialog",
+            "Choose Texture",
+            ".png,.jpg,.jpeg,.bmp,.tga,.dds",
+            config
+        );
+    }
+
+
+    if (ImGuiFileDialog::Instance()->Display("ChooseTextureDialog"))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string newPath = ImGuiFileDialog::Instance()->GetFilePathName();
+
+            sf::Texture* tex = TextureManager::get(newPath);
+
+            if (tex) {
+                _tileMap->tileset = tex;
+                _tileMap->texturePath = newPath;
+                std::cout << "Path changed to: " + newPath;
+                changeMade = true;
+            }
+        }
+        ImGuiFileDialog::Instance()->Close();
+    }
+
+    ImGui::SameLine();
+    ImGui::Text(("Path: " + _tileMap->texturePath).c_str());
+#pragma endregion
+
+#pragma region Tile Size
 
     auto size = _tileMap->tileSize;
     int tileSize[2] = { size.x, size.y };
     if (ImGui::InputInt2("tile size", tileSize)) {
-        _tileMap->tileSize = { tileSize[0], tileSize[1]};
+        _tileMap->tileSize = sf::Vector2u(tileSize[0], tileSize[1]);
+    }
+#pragma endregion
+
+#pragma region TileMap Size
+
+    int sizeRaw[2] = { _tileMap->width , _tileMap->height };
+    ImGui::InputInt2("Tilemap Size", sizeRaw);
+
+    // When the user finishes editing
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        unsigned newW = std::max(1, sizeRaw[0]);
+        unsigned newH = std::max(1, sizeRaw[1]);
+
+        if (newW != _tileMap->width || newH != _tileMap->height)
+        {
+            _tileMap->Resize(newW, newH);
+            rebuild();
+        }
     }
 
+#pragma endregion
 
 
-
+    if (changeMade) rebuild();
 }
 
 #endif
