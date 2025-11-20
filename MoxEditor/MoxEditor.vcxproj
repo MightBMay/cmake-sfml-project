@@ -166,7 +166,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;IN_EDITOR=1</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\turtw\OneDrive\Desktop\MEngine\MOXEngineGame\src;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src;C:\ProgrammingStuff\SFML-3.0.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\ProgrammingStuff\LDtkLoader-1.5.3.1\include;C:\Users\turtw\OneDrive\Desktop\MEngine\MOXEngineGame\src;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src;C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src;C:\ProgrammingStuff\SFML-3.0.0\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -199,6 +199,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\DataTypes.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Entity.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\EntityDef.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Enum.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\FieldsContainer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Layer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\LayerDef.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Level.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Project.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\TagsContainer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Tile.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Tileset.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Utils.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\World.cpp" />
     <ClCompile Include="MoxEditor.cpp" />
     <ClCompile Include="src\CreateGameObject.cpp" />
     <ClCompile Include="src\GUI_Action.cpp" />
@@ -219,6 +233,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\containers\FieldsContainer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\containers\TagsContainer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\DataTypes.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\defs\EntityDef.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\defs\FieldDef.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\defs\LayerDef.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Entity.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Enum.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Field.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Layer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Level.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Project.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\thirdparty\json_fwd.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\thirdparty\optional.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Tile.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Tileset.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Utils.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\World.hpp" />
     <ClInclude Include="..\MoxEngine\src\CameraController.h" />
     <ClInclude Include="src\ComponentImport.h" />
     <ClInclude Include="src\GUI_CreateGameObject.h" />
@@ -237,6 +269,9 @@
     <ClInclude Include="src\imstb_truetype.h" />
     <ClInclude Include="src\PlayerMovement.h" />
     <ClInclude Include="src\SceneHeirarchy.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Version.hpp.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

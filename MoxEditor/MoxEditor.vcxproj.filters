@@ -28,6 +28,9 @@
     <Filter Include="Header Files\GUI Actions">
       <UniqueIdentifier>{0a27f171-a9ff-47cb-8c75-7106f6f1d6da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LDTKLoader">
+      <UniqueIdentifier>{46d7c4f5-6e0c-4480-86b4-ccce075c079c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MoxEditor.cpp">
@@ -68,6 +71,48 @@
     </ClCompile>
     <ClCompile Include="src\ImGuiFileDialog.cpp">
       <Filter>Header Files\Imgui stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Layer.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\LayerDef.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Level.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Project.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\TagsContainer.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Tile.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Tileset.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Utils.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\World.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\DataTypes.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Entity.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\EntityDef.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Enum.cpp">
+      <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\FieldsContainer.cpp">
+      <Filter>LDTKLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,5 +170,64 @@
     <ClInclude Include="src\ImGuiFileDialogConfig.h">
       <Filter>Header Files\Imgui stuff</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\containers\FieldsContainer.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\containers\TagsContainer.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\DataTypes.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\defs\EntityDef.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\defs\FieldDef.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\defs\LayerDef.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Entity.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Enum.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Field.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Layer.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Level.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Project.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\thirdparty\json_fwd.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\thirdparty\optional.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Tile.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Tileset.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\Utils.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\World.hpp">
+      <Filter>LDTKLoader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Version.hpp.in">
+      <Filter>LDTKLoader</Filter>
+    </None>
   </ItemGroup>
 </Project>

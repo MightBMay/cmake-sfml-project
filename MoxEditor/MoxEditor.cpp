@@ -20,6 +20,10 @@
 #include "SpriteRenderer.h"
 #include "TileMapRenderer.h"
 
+#include "LDtkLoader/Project.hpp"
+#include "LDtkLoader/Level.hpp"
+
+
 
 #if IN_EDITOR
 
@@ -78,7 +82,25 @@ int main()
     if (!scene) scene = std::make_unique<Scene>();
 
 
+    auto project = ldtk::Project();
+    project.loadFromFile("../assets/ldtk/LDKT_Level.ldtk");
 
+    const auto& level = project.getWorld().getLevel("Level_0");
+
+    auto map = std::make_unique<TileMap>();
+    map->load(level);
+
+    auto renderer = std::make_unique<TileMapRenderer>();
+    renderer->setTilemap(std::move(map), "renderLayer");
+
+
+
+    auto tilemapTest = std::make_unique<GameObject>();
+    tilemapTest->setRenderer(std::move(renderer));
+    scene->addObject(
+        std::move(tilemapTest)
+    );
+    
 
 #pragma endregion
 
@@ -86,8 +108,6 @@ int main()
         sf::Time dt = deltaClock.restart();
         float deltaTime = dt.asSeconds();
         Input::Update();
-
-
         window.clear(sf::Color(40,40,40));
 #if IN_EDITOR
         ImGui::SFML::Update(window, dt);
@@ -121,7 +141,7 @@ int main()
 
 #if IN_EDITOR
     ImGui::SFML::Shutdown();
-    scene->Save();
+    //scene->Save();
 #endif
     return 0;
 

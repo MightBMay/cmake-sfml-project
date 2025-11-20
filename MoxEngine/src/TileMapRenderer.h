@@ -7,64 +7,38 @@
 class TileMapRenderer : public Renderer {
 private:
 	std::unique_ptr<TileMap> _tileMap = nullptr;
-	sf::VertexBuffer _vertices;
+    std::string _layerName = ""; // actual layer from ldtk to draw
 
 public:
 
 	static std::unique_ptr<Renderer> Create(const nlohmann::json& data) {
-		std::string spritePath = data.value("spritePath", missing);
-        sf::Vector2u tileSize{16,16};
-        if (data.contains("tileSize")) {
-            tileSize.x = data["tileSize"][0].get<unsigned>();
-            tileSize.y = data["tileSize"][1].get<unsigned>();
-        }
-        
-        unsigned width = data.value("width", 0);
-        unsigned height = data.value("height", 0);
+        std::unique_ptr<TileMapRenderer> r = std::make_unique<TileMapRenderer>();
 
-        std::vector<int> tileData;
-        if (data.contains("tileData") && data["tileData"].is_array()) {
-            tileData = data["tileData"].get<std::vector<int>>();
-        }
+        if (data.contains("layer"))
+            r->_layerName = data["layer"];
 
-
-        std::unique_ptr<TileMap> map = std::make_unique<TileMap>();
-        map->texturePath = spritePath;
-        map->tileset = TextureManager::get(spritePath);
-        map->tileSize = { tileSize };
-        map->width = width;
-        map->height = height;
-        map->tileData = tileData;
-
-
-        return std::make_unique<TileMapRenderer>( std::move(map) );
+        return r;
 	}
 
 
 	TileMapRenderer() = default;
-    TileMapRenderer(std::unique_ptr<TileMap> map) {
 
-        setTilemap(std::move(map));
-        
-    }
+    void setTilemap(std::unique_ptr<TileMap> map, const std::string& layerName);
 
-	void setTilemap(std::unique_ptr<TileMap> newMap);
-	void rebuild();
+    virtual sf::FloatRect GetGlobalBounds() const override { return {}; }
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) override;
 
-	virtual sf::FloatRect GetGlobalBounds() const { return sf::FloatRect(); }
 
 
 #if IN_EDITOR
     virtual void getImGuiParams(nlohmann::json& data)override;
     virtual void getInspectorParams()override;
 
-    virtual nlohmann::json SaveToJSON() const override{ 
-        if (!_tileMap) return {};
+    virtual nlohmann::json SaveToJSON() const override {
         nlohmann::json data;
         data["type"] = "tilemap";
-        _tileMap->SaveToJSON(data);
+        data["layer"] = _layerName;
         return data;
     }
 #endif

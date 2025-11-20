@@ -3,150 +3,52 @@
 #include "ImGUI.h"
 #include "ImGuiFileDialog.h"
 
-void TileMapRenderer::setTilemap(std::unique_ptr<TileMap> newMap)
-{
-    _tileMap = std::move(newMap);
-    rebuild();
+void TileMapRenderer::setTilemap(std::unique_ptr<TileMap> newMap, const std::string& layerName) {
+
+    _tileMap = std::move(newMap);    
+    _layerName = layerName;
 }
 
-void TileMapRenderer::rebuild()
-{
-    if (!_tileMap || !_tileMap->tileset)
-        return;
-
-    unsigned width = _tileMap->width;
-    unsigned height = _tileMap->height;
-    sf::Vector2u ts = _tileMap->tileSize;
-
-    _vertices = sf::VertexBuffer(sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static);
-    _vertices.create(width * height * 6);
-
-    std::vector<sf::Vertex> verts;
-    verts.resize(width * height * 6);
-
-    int tilesPerRow = _tileMap->tileset->getSize().x / ts.x;
-
-    unsigned idx = 0;
-
-    for (unsigned y = 0; y < height; ++y) {
-        for (unsigned x = 0; x < width; ++x) {
-
-            int tileID = _tileMap->tileData[x + y * width];
-
-            int tu = tileID % tilesPerRow;
-            int tv = tileID / tilesPerRow;
-
-            float px = x * ts.x;
-            float py = y * ts.y;
-
-            float tx = tu * ts.x;
-            float ty = tv * ts.y;
-            sf::Color col = sf::Color::White;
-            verts[idx++] = sf::Vertex{ { px,              py }, col, { tx,              ty } };
-            verts[idx++] = sf::Vertex{ { px + ts.x,       py },col,  { tx + ts.x,       ty } };
-    verts[idx++] = sf::Vertex{ { px,              py + ts.y },col,  { tx,              ty + ts.y } };
-
-            verts[idx++] = sf::Vertex{ { px + ts.x,       py }, col, { tx + ts.x,       ty } };
-            verts[idx++] = sf::Vertex{ { px + ts.x,       py + ts.y },col,  { tx + ts.x,       ty + ts.y } };
-            verts[idx++] = sf::Vertex{ { px,              py + ts.y },col,  { tx,              ty + ts.y } };
-        }
-    }
-
-    _vertices.update(verts.data());
-}
 
 void TileMapRenderer::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
-    if (!_tileMap || !_tileMap->tileset)
+    if (!_tileMap) {
+        std::cerr << " Null tilemap\n";
         return;
+    }
 
-    states.texture = _tileMap->tileset;
-    target.draw(_vertices, states);
+    if (_layerName.empty()) {
+        std::cerr << "Layer name was empty\n";
+        return;
+    }
+    try {
+        
+       
+        const auto& layer = _tileMap->getLayer(_layerName);
+        target.draw(layer, states);
+        std::cout << "drawing\n";
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Error drawing layer '" << _layerName << "': " << e.what() << "\n";
+    }
 }
 
 
 #if IN_EDITOR
-void TileMapRenderer::getImGuiParams(nlohmann::json& data){}
+void TileMapRenderer::getImGuiParams(nlohmann::json& data) {
+    data["layer"] = _layerName;
+}
 
 
-void TileMapRenderer::getInspectorParams(){
+void TileMapRenderer::getInspectorParams() {
+    ImGui::SeparatorText("Tilemap Renderer");
 
-    ImGui::SeparatorText("TileMap Renderer");
+    char buf[256];
+    strcpy_s(buf, _layerName.c_str());
 
-    bool changeMade = false;
-
-#pragma region Texture Select Dialog
-
-
-
-    IGFD::FileDialogConfig config;
-    config.path = "../assets/tilemaps";
-    config.countSelectionMax = 1;
-
-
-    if (ImGui::Button("Select Texture")) {
-        ImGuiFileDialog::Instance()->OpenDialog(
-            "ChooseTextureDialog",
-            "Choose Texture",
-            ".png,.jpg,.jpeg,.bmp,.tga,.dds",
-            config
-        );
+    if (ImGui::InputText("Layer to draw", buf, sizeof(buf))) {
+        _layerName = buf;
     }
-
-
-    if (ImGuiFileDialog::Instance()->Display("ChooseTextureDialog"))
-    {
-        if (ImGuiFileDialog::Instance()->IsOk())
-        {
-            std::string newPath = ImGuiFileDialog::Instance()->GetFilePathName();
-
-            sf::Texture* tex = TextureManager::get(newPath);
-
-            if (tex) {
-                _tileMap->tileset = tex;
-                _tileMap->texturePath = newPath;
-                std::cout << "Path changed to: " + newPath;
-                changeMade = true;
-            }
-        }
-        ImGuiFileDialog::Instance()->Close();
-    }
-
-    ImGui::SameLine();
-    ImGui::Text(("Path: " + _tileMap->texturePath).c_str());
-#pragma endregion
-
-#pragma region Tile Size
-
-    auto size = _tileMap->tileSize;
-    int tileSize[2] = { size.x, size.y };
-    if (ImGui::InputInt2("tile size", tileSize)) {
-        _tileMap->tileSize = sf::Vector2u(tileSize[0], tileSize[1]);
-    }
-#pragma endregion
-
-#pragma region TileMap Size
-
-    int sizeRaw[2] = { _tileMap->width , _tileMap->height };
-    ImGui::InputInt2("Tilemap Size", sizeRaw);
-
-    // When the user finishes editing
-    if (ImGui::IsItemDeactivatedAfterEdit())
-    {
-        unsigned newW = std::max(1, sizeRaw[0]);
-        unsigned newH = std::max(1, sizeRaw[1]);
-
-        if (newW != _tileMap->width || newH != _tileMap->height)
-        {
-            _tileMap->Resize(newW, newH);
-            rebuild();
-        }
-    }
-
-#pragma endregion
-
-
-    if (changeMade) rebuild();
 }
 
 #endif

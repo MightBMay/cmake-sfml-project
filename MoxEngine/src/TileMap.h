@@ -1,55 +1,47 @@
+// Created by Modar Nasser on 13/06/2021.
+
 #pragma once
 
-#include <string>
 #include <vector>
+#include <map>
+
 #include <SFML/Graphics.hpp>
-struct TileMap {
-	std::string texturePath;
-	const sf::Texture* tileset;
+#include <LDtkLoader/Level.hpp>
 
-	sf::Vector2u tileSize;
-	unsigned width;
-	unsigned height;
-	std::vector<int> tileData;
+class TileMap {
+public:
+    static std::string path;
 
-	TileMap() : tileset(nullptr), width(0), height(0) {}
+    class Textures {
+        Textures() = default;
+        std::map<std::string, sf::Texture> data;
+        static auto instance() -> Textures&;
+    public:
+        Textures(const Textures&) = delete;
+        static auto get(const std::string& name) -> sf::Texture&;
+    };
 
+    class Layer : public sf::Drawable {
+        friend TileMap;
+        Layer(const ldtk::Layer& layer, sf::RenderTexture& render_texture);
+        sf::Texture* m_tileset_texture;
+        sf::RenderTexture& m_render_texture;
+        sf::VertexArray m_vertex_array;
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    };
 
-	void SaveToJSON(nlohmann::json& data) {
+    TileMap() = default;
+    void load(const ldtk::Level& level);
+    auto getLayer(const std::string& name) const -> const Layer&;
 
-		data["spritePath"] = texturePath;
-		data["tileSize"] = { tileSize.x, tileSize.y };
-		data["width"] = width;
-		data["height"] = height;
-		data["tileData"] = tileData;
-	}
+    void CheckLayers() {
+        if (m_layers.empty()) std::cout << "empty layuers";
+        for (const auto& pair : m_layers) {
+            std::cout << "layer: " << pair.first << "\n";
+        }
+    }
 
-	void Resize(unsigned newW, unsigned newH) {
-		unsigned oldW = width;
-		unsigned oldH = height;
-		std::vector<int> newData(newW * newH, 0);
-		unsigned copyW = std::min(oldW, newW);
-		unsigned copyH = std::min(oldH, newH);
-
-
-		for (unsigned y = 0; y < copyH; ++y)
-			for (unsigned x = 0; x < copyW; ++x)
-				newData[x + y * newW] = tileData[x + y * oldW];
-
-		tileData = std::move(newData);
-		width = newW;
-		height = newH;
-
-			
-
-	}
-
-
-	void EditTile(unsigned x, unsigned y, int newValue) {
-		tileData[x + y * width] = newValue;
-		// tile rules can go here prob.
-	}
-
-
+private:
+    mutable sf::RenderTexture m_render_texture;
+    std::map<std::string, Layer> m_layers;
 };
-
