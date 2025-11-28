@@ -1,4 +1,26 @@
 {
-    "objects": [],
+    "objects": [
+        {
+            "components": [],
+            "guid": 14876359567657589026,
+            "name": "NewObject",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "renderLayer": 0,
+            "renderer": {
+                "layer": "renderLayer",
+                "levelName": "Level_0",
+                "projectPath": "C:\\Users\\turtw\\OneDrive\\Desktop\\MEngine\\assets\\ldtk\\LDKT_Level.ldtk",
+                "type": "tilemap"
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        }
+    ],
     "sceneName": "testing.scene"
 }
