@@ -79,7 +79,6 @@ int main()
     window.setFramerateLimit(60);
     secondTimer = std::make_unique<Timer>(1, true);
 
-    secondTimer->OnTimerReset() += []() {std::cout << "second\n"; };
     secondTimer->OnTimerReset() += [&ldtkManager]() { ldtkManager.Update();};
 
 #if IN_EDITOR

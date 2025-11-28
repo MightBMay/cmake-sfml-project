@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "json.hpp"
-
+#include "Renderer.h"
 
 class Component;
 class Renderer;
@@ -27,12 +27,13 @@ public:
 	T& setRenderer(Args&&... args) {
 		static_assert(std::is_base_of_v<Renderer, T>, "Type must inherit from renderer");
 		_renderer = std::make_unique<T>(std::forward<Args>(args)...);
-
+		_renderer->AfterAddedToGameObject();
 		return *static_cast<T*>(_renderer.get());
 	}
 
 	void setRenderer(std::unique_ptr<Renderer> renderer) {
 		_renderer = std::move(renderer);
+		_renderer->AfterAddedToGameObject();
 	}
 
 	std::unique_ptr<Renderer> RemoveRenderer() {

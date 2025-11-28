@@ -1,6 +1,8 @@
 #pragma once
-#include "pch.h"
 #include "Global.h"
+
+class GameObject;
+
 class Renderer {
 
 protected:
@@ -11,10 +13,13 @@ protected:
 public:
 	virtual ~Renderer() = default;
 	Renderer(){}
-	Renderer(GameObject* obj) { _transform = obj->_transform.get(); }
-	Renderer(Transform* transform) { _transform = transform; }
+	Renderer(GameObject* obj);
+	Renderer(Transform* transform);
 
 
+	virtual void AfterAddedToGameObject() {
+
+	}
 
 
 	void SetTransform(Transform* transform) {

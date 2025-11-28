@@ -73,8 +73,8 @@ void TileMapRenderer::getInspectorParams() {
             
 
             ldtk::Project* project = LDTK_Manager::instance().getProject(_projectPath);
-            
-            const ldtk::Level& level = project->getWorld().getLevel("Level_0");
+            _levelName = "Level_0";
+            const ldtk::Level& level = project->getWorld().getLevel(_levelName);
             //curLevel = &level; // store in global so other classes can access, and it stays alive.
             _tileMap->load(level);
 
@@ -93,6 +93,11 @@ void TileMapRenderer::getInspectorParams() {
 
 
 
+    char levelNameBuf[512];
+    strcpy_s(levelNameBuf, _levelName.c_str());
+    if (ImGui::InputText("Level Name", levelNameBuf, sizeof(levelNameBuf)) ) {
+        _levelName = levelNameBuf;
+    }
 
     char buf[256];
     strcpy_s(buf, _layerName.c_str());

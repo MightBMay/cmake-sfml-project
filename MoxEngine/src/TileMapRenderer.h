@@ -28,16 +28,19 @@ public:
 
 		return r;
 	}
-
-
-	TileMapRenderer() {
+	
+	virtual void AfterAddedToGameObject() override {
 		LDTK_Manager::instance().onProjectReload += [this](const std::string& path, ldtk::Project& proj) {
+			std::cout << "leveln: " << _levelName << "\n";
 				if (_projectPath == path) {
 				auto& level = proj.getWorld().getLevel(_levelName);
 				_tileMap->load(level);
 			}
 		};
 	}
+
+
+	TileMapRenderer() = default;
 
 	void setTilemap(std::unique_ptr<TileMap> map, const std::string& layerName);
 
