@@ -1,6 +1,6 @@
 #include "GUI_Inspector.h"
 #include "GUI_Manager.h"
-
+#include "GUIA_GameObject.h"
 #if IN_EDITOR
 #include "imgui.h"
 

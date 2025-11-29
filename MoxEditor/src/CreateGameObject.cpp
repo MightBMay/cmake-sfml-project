@@ -1,9 +1,10 @@
-#include "GUI_CreateGameObject.h"
+
 #if IN_EDITOR
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "GUI_Action.h"
 #include "GUI_Manager.h"
+#include "GUIA_GameObject.h"
 
 
 void GUI_CreateGameObject::Draw(Scene& scene) {

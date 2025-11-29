@@ -114,9 +114,6 @@
     <ClInclude Include="src\TextureManager.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
-    <ClInclude Include="src\TileMapRenderer.h">
-      <Filter>Header Files\Renderers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\containers\FieldsContainer.hpp">
       <Filter>LDTKLoader</Filter>
     </ClInclude>
@@ -171,11 +168,14 @@
     <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\World.hpp">
       <Filter>LDTKLoader</Filter>
     </ClInclude>
-    <ClInclude Include="src\LDTK_Manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Timer.h">
       <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FixedStack.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LDTK_Manager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="src\TextureManager.cpp">
       <Filter>Source Files\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TileMapRenderer.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TileMap.cpp">
       <Filter>Source Files</Filter>

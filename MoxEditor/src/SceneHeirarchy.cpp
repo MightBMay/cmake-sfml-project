@@ -2,8 +2,7 @@
 #if IN_EDITOR
 #include "imgui.h"
 #include "GUI_Manager.h"
-#include "GUI_Action.h"
-
+#include "GUIA_GameObject.h"
 void GUI_SceneHierarchy::Draw(Scene& scene) {
     if (!_isVisible) return;
     ImGui::Begin("Scene Hierarchy");

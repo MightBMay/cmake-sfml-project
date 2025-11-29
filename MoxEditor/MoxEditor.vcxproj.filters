@@ -31,6 +31,9 @@
     <Filter Include="LDTKLoader">
       <UniqueIdentifier>{46d7c4f5-6e0c-4480-86b4-ccce075c079c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Renderers">
+      <UniqueIdentifier>{48d7677d-0527-4ab4-a709-15d5cd721aa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MoxEditor.cpp">
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\FieldsContainer.cpp">
       <Filter>LDTKLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TileMapRenderer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\World.hpp">
       <Filter>LDTKLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUIA_Tilemap.h">
+      <Filter>Header Files\GUI Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUIA_GameObject.h">
+      <Filter>Header Files\GUI Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileMapRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

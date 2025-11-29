@@ -67,10 +67,7 @@ public:
 
 
 		std::string label = "PlayerMovement##" + std::to_string(reinterpret_cast<uintptr_t>(this));
-		if (ImGui::InputFloat(label.c_str(), &_moveSpeed)) {
-		
-		}
-
+		ImGui::InputFloat(label.c_str(), &_moveSpeed);
 	}
 
 	virtual nlohmann::json SaveToJSON() const override {

@@ -226,6 +226,7 @@
     <ClCompile Include="src\imgui_tables.cpp" />
     <ClCompile Include="src\imgui_widgets.cpp" />
     <ClCompile Include="src\SceneHeirarchy.cpp" />
+    <ClCompile Include="src\TileMapRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MoxEngine\MoxEngine.vcxproj">
@@ -253,6 +254,8 @@
     <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\World.hpp" />
     <ClInclude Include="..\MoxEngine\src\CameraController.h" />
     <ClInclude Include="src\ComponentImport.h" />
+    <ClInclude Include="src\GUIA_GameObject.h" />
+    <ClInclude Include="src\GUIA_Tilemap.h" />
     <ClInclude Include="src\GUI_CreateGameObject.h" />
     <ClInclude Include="src\GUI_Action.h" />
     <ClInclude Include="src\GUI_Inspector.h" />
@@ -269,6 +272,7 @@
     <ClInclude Include="src\imstb_truetype.h" />
     <ClInclude Include="src\PlayerMovement.h" />
     <ClInclude Include="src\SceneHeirarchy.h" />
+    <ClInclude Include="src\TileMapRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\Version.hpp.in" />
