@@ -1,7 +1,13 @@
 #include "Collider.h"
 #include "BoxCollider.h"
 #include "CircleCollider.h"
+#include "GameObject.h"
 
+sf::Vector2f Collider::GetWorldPosition() const {
+	sf::Vector2f scale = _transform->GetScale();
+	sf::Vector2f offset{ _colliderOrigin.x * scale.x, _colliderOrigin.y * scale.y };
+	return _transform->GetPosition() + offset;
+}
 
 bool Collider::BoxVsBox(const BoxCollider& a, const BoxCollider& b) {
 	return !(a._position.x + a._size.x < b._position.x ||
@@ -13,19 +19,29 @@ bool Collider::BoxVsBox(const BoxCollider& a, const BoxCollider& b) {
 
 bool Collider::BoxVsCircle(const BoxCollider& box, const CircleCollider& circle)
 {
-	float cx = std::clamp(circle._center.x, box._position.x, box._position.x + box._size.x);
-	float cy = std::clamp(circle._center.y, box._position.y, box._position.y + box._size.y);
 
-	float dx = circle._center.x - cx;
-	float dy = circle._center.y - cy;
+	auto circleCenter = circle.GetWorldPosition();
 
-	return (dx * dx + dy * dy) <= circle._radius * circle._radius;
+	float cx = std::clamp(circleCenter.x, box._position.x, box._position.x + box._size.x);
+	float cy = std::clamp(circleCenter.y, box._position.y, box._position.y + box._size.y);
+
+	float dx = circleCenter.x - cx;
+	float dy = circleCenter.y - cy;
+
+	float radius = circle.GetRadius();
+	return (dx * dx + dy * dy) <= radius * radius ;
 }
 
 bool Collider::CircleVsCircle(const CircleCollider& a, const CircleCollider& b)
 {
-	float dx = a._center.x - b._center.x;
-	float dy = a._center.y - b._center.y;
+	const sf::Vector2f centerA = a.GetWorldPosition();
+	const sf::Vector2f centerB = b.GetWorldPosition();
+
+	const float radA = a.GetRadius();
+	const float radB = a.GetRadius();
+
+	float dx = centerA.x - centerB.x;
+	float dy = centerA.y - centerB.y;
 	float rad = a._radius + b._radius;
 	return (dx * dx + dy * dy) <= rad * rad;
 }
@@ -40,9 +56,12 @@ bool Collider::PointVsBox(const sf::Vector2f& p, const BoxCollider& box)
 
 bool Collider::PointVsCircle(const sf::Vector2f& p, const CircleCollider& c)
 {
-	float dx = p.x - c._center.x;
-	float dy = p.y - c._center.y;
-	return (dx * dx + dy * dy) <= (c._radius * c._radius);
+	auto circleCenter = c.GetWorldPosition();
+	float radius = c.GetRadius();
+
+	float dx = p.x - circleCenter.x;
+	float dy = p.y - circleCenter.y;
+	return (dx * dx + dy * dy) <= (radius * radius);
 }
 
 /*bool PointVsTilemap(const sf::Vector2f& p, const TilemapCollider& map)
@@ -92,4 +111,12 @@ bool Collider::CheckCollision(const Collider* a, const Collider* b) {
 
 
 	return false;
+}
+
+
+void Collider::OnCollision(const Collider* other) const {
+
+	std::cout << "this col: " << _parent->GetName() << ", other col: " << other->_parent->GetName() << "\n";
+
+
 }

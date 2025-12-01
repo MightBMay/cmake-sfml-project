@@ -195,6 +195,9 @@
     <ClInclude Include="src\ColliderFactory.h">
       <Filter>Header Files\Components\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="src\CollisionSystem.h">
+      <Filter>Header Files\Components\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject.cpp">

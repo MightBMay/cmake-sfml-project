@@ -3,6 +3,7 @@
 #include "json.hpp"
 #include "Renderer.h"
 #include "Collider.h"
+#include "CollisionSystem.h"
 class Component;
 class Renderer;
 
@@ -48,15 +49,31 @@ public:
 	template<typename T, typename... Args>
 	T& setCollider(Args&&... args) {
 		static_assert(std::is_base_of_v<Collider, T>, "Type must inherit from collider");
+
+		if (_collider) // remove old collider if already had one.
+			CollisionSystem::RemoveCollider(_collider.get());
+
+
 		_collider = std::make_unique<T>(std::forward<Args>(args)...);
+		CollisionSystem::AddCollider(_collider.get());
+		_collider->_parent = this;
+		_collider->_transform = _transform.get();
 		return *static_cast<T*>(_collider.get());
 	}
 
 	void setCollider(std::unique_ptr<Collider> collider) {
+		if (_collider) // remove old collider if already had one.
+			CollisionSystem::RemoveCollider(_collider.get());
+		
 		_collider = std::move(collider);
+		_collider->_transform = _transform.get();
+		CollisionSystem::AddCollider(_collider.get());
+		_collider->_parent = this;
 	}
 
 	std::unique_ptr<Collider> removeCollider() {
+
+		CollisionSystem::RemoveCollider(_collider.get());
 		return std::move(_collider);
 	}
 

@@ -2,18 +2,49 @@
     "objects": [
         {
             "components": [],
-            "guid": 14876359567657589026,
-            "name": "NewObject",
+            "guid": 7558484407566598574,
+            "name": "Circle G",
             "position": [
                 0.0,
                 0.0
             ],
             "renderLayer": 0,
             "renderer": {
-                "layer": "renderLayer",
-                "levelName": "Level_0",
-                "projectPath": "C:\\Users\\turtw\\OneDrive\\Desktop\\MEngine\\assets\\ldtk\\LDKT_Level.ldtk",
-                "type": "tilemap"
+                "colour": [
+                    0,
+                    255,
+                    0,
+                    255
+                ],
+                "radius": 32.0,
+                "type": "circle",
+                "vertexCount": 32
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "components": [],
+            "guid": 13077656098056108542,
+            "name": "Circle R",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "renderLayer": 0,
+            "renderer": {
+                "colour": [
+                    255,
+                    0,
+                    0,
+                    255
+                ],
+                "radius": 32.0,
+                "type": "circle",
+                "vertexCount": 32
             },
             "rotation": 0.0,
             "scale": [

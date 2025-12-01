@@ -30,6 +30,7 @@
 
 #include "Timer.h"
 
+#include "CollisionSystem.h"
 
 #if IN_EDITOR
 
@@ -103,6 +104,9 @@ int main()
         float deltaTime = dt.asSeconds();
         secondTimer->Update(deltaTime);
         Input::Update();
+        
+        CollisionSystem::Update(deltaTime);
+
         window.clear(sf::Color(40,40,40));
 #if IN_EDITOR
         ImGui::SFML::Update(window, dt);

@@ -6,7 +6,6 @@
 
 
 struct CircleCollider : Collider {
-	sf::Vector2f _center = {0,0};
 	float _radius = 0;
 
 	static std::unique_ptr<Collider> Create(const nlohmann::json& data) {
@@ -14,14 +13,16 @@ struct CircleCollider : Collider {
 		col->type = ColliderType::Circle;
 		col->_radius = data.value("radius", 0);
 		if (data.contains("centerPos")) {
-			col->_center.x = data["centerPos"][0];
-			col->_center.y = data["centerPos"][1];
+			col->_colliderOrigin.x = data["centerPos"][0];
+			col->_colliderOrigin.y = data["centerPos"][1];
 		}
-		
+		return col;
 	}
 
 	CircleCollider() = default;
 
+
+	float GetRadius() const;
 
 
 #if IN_EDITOR

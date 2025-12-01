@@ -158,13 +158,13 @@ void GUI_Inspector::Draw() {
         }
 
         if (ImGui::Button("Confirm")) {
-            auto action = std::make_unique<GUIA_AddCollider>(selected, colliderOptions[selectedRendererIndex], colliderData);
+            auto action = std::make_unique<GUIA_AddCollider>(selected, colliderOptions[selectedColliderIndex], colliderData);
             GUI_Manager::instance().ExecuteAction(std::move(action));
             _addingCollider = false;
         }
         ImGui::Unindent(20);
     }
-
+    collider = selected->getCollider();
     if (collider)
         collider->getInspectorParams();
     else 

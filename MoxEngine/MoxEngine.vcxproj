@@ -53,6 +53,7 @@
     <ClInclude Include="src\CircleRenderer.h" />
     <ClInclude Include="src\Collider.h" />
     <ClInclude Include="src\ColliderFactory.h" />
+    <ClInclude Include="src\CollisionSystem.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />
     <ClInclude Include="src\config.h" />

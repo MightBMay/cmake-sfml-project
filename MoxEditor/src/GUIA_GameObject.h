@@ -140,9 +140,10 @@ public:
             Collider::ToString(_type),
             _colliderData
         );
+        if (collider)std::cout << "valid~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         _obj->setCollider(std::move(collider));
-        std::cout << "ran";
+
     }
 
 

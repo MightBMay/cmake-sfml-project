@@ -1,15 +1,7 @@
-﻿  CreateGameObject.cpp
-  GUI_Action.cpp
-  GUI_Inspector.cpp
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp(26,26): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp(26,21): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\GUI_Inspector.cpp(26,16): warning C4305: 'argument': truncation from 'double' to 'float'
-  SceneHeirarchy.cpp
-  Generating code
+﻿  Generating code
   Previous IPDB and IOBJ mismatch, fall back to full compilation.
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(47): warning C4172: returning address of local variable or temporary
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(43): warning C4172: returning address of local variable or temporary
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleCollider.h(21): warning C4715: 'CircleCollider::Create': not all control paths return a value
-  All 14752 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 14850 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe

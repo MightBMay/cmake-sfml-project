@@ -25,8 +25,9 @@ GameObject::GameObject(int renderLayer, const sf::Vector2f& position)
 void GameObject::Update(float deltaTime) {
 
 	for (auto& c : _components) {
-		if(c->GetEnabled())
+		if (c->GetEnabled()) {
 			c->Update(deltaTime);
+		}
 	}
 }
 
